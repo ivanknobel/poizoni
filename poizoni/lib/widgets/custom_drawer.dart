@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:poizoni/tiles/drawer_tile.dart';
+import 'package:poizoni/screens/login_screen.dart';
 
 class CustomDrawer extends StatelessWidget {
 
@@ -11,44 +11,63 @@ class CustomDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+
+      Widget _buildDrawerBack() => Container(
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+                colors: [
+                  Color.fromARGB(255, 203, 241, 200),
+                  Colors.white
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter
+            )
+        ),
+      );
+
     return Drawer(
-      child: ListView(
+      child: Stack(
+        children: <Widget>[
+          _buildDrawerBack(),
+          ListView(
             padding: EdgeInsets.only(left:32.0, top: 16.0),
             children: <Widget>[
               Container(
                 margin: EdgeInsets.only(bottom: 8.0),
-                padding: EdgeInsets.fromLTRB(0.0, 16.0, 16.0, 8.0),
-                height: 170.0,
+                padding: EdgeInsets.fromLTRB(0.0, 20.0, 16.0, 8.0),
+                height: 200.0,
                 child: Stack(
                   children: <Widget>[
                     Positioned(
-                      top: 8.0,
+                      top: 35.0,
                       left:0.0,
                       child: Text("Poizoni",
                         style: TextStyle(fontSize: 38.0, fontWeight: FontWeight.bold),
                       ),
                     ),
                     Positioned(
-                        left: 0.0,
-                        bottom: 0.0,
-                        child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                GestureDetector(
-                                  child: Text(
-                                    "Entre ou cadastre-se >",
-                                    style: TextStyle(
-                                        fontSize: 22.0,
-                                        fontWeight: FontWeight.bold
-                                    ),
-                                  ),
-                                  onTap: (){
-
-                                  },
-                                ),
-                              ],
+                      left: 0.0,
+                      bottom: 0.0,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          GestureDetector(
+                            child: Text(
+                              "Entre ou cadastre-se >",
+                              style: TextStyle(
+                                  fontSize: 22.0,
+                                  fontWeight: FontWeight.bold
+                              ),
                             ),
-                        )
+                            onTap: (){
+                              Navigator.of(context).push(
+                                  MaterialPageRoute(builder: (context)=>LoginScreen())
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    )
                   ],
                 ),
               ),
@@ -59,6 +78,8 @@ class CustomDrawer extends StatelessWidget {
               DrawerTile(Icons.account_circle, "Você", pageController, 3),
             ],
           ),
+        ],
+      )
     );
   }
 }

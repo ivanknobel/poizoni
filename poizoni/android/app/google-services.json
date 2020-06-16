@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "7861323752",
+    "firebase_url": "https://poizoni.firebaseio.com",
+    "project_id": "poizoni",
+    "storage_bucket": "poizoni.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:7861323752:android:6775f48a4d41e25ed9465d",
+        "android_client_info": {
+          "package_name": "br.com.poizoni"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "7861323752-9fb3h1rsosc4bhcd73dsodvali4dj9vb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.poizoni",
+            "certificate_hash": "c0ad90348076a9d7bbf8a0fe015c1570dfa09a82"
+          }
+        },
+        {
+          "client_id": "7861323752-1esio4p7pspdmf0mu4p04qelvs3ifbid.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYm_odopGPpTRJDjOnfYqJxsx1l5VT40w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "7861323752-1esio4p7pspdmf0mu4p04qelvs3ifbid.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
