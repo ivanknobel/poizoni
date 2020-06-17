@@ -51,6 +51,13 @@ class CustomDrawer extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
+                          Text("Olá ",
+                            style: TextStyle(
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.bold
+                            ),
+                          ),
+                          SizedBox(height: 20.0),
                           GestureDetector(
                             child: Text(
                               "Entre ou cadastre-se >",
