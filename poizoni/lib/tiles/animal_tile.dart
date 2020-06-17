@@ -21,7 +21,7 @@ class AnimalTile extends StatelessWidget {
               child: Image.network(
                 animal.foto,
                 fit: BoxFit.cover,
-                height: 250.0,
+                height: 100.0,
               ),
             ),
             Flexible(

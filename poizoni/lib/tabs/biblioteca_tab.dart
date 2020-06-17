@@ -21,7 +21,14 @@ class BibliotecaTab extends StatelessWidget {
               color: Colors.grey[500]
           ).toList();
 
-          return ListView(
+          return GridView(
+            padding: EdgeInsets.all(4.0),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              mainAxisSpacing: 2.0,
+              crossAxisSpacing: 4.0,
+              childAspectRatio: 0.65,
+              ),
             children: dividedTiles,
           );
         }
