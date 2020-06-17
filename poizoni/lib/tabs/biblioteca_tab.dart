@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import "package:flutter/material.dart";
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:poizoni/tiles/category_tile.dart';
+import 'package:poizoni/tiles/biblioteca_tile.dart';
 
 class BibliotecaTab extends StatelessWidget {
   @override
@@ -15,7 +15,7 @@ class BibliotecaTab extends StatelessWidget {
           var dividedTiles = ListTile.divideTiles(
               tiles: snapshot.data.documents.map(
                       (doc) {
-                    return CategoryTile(doc);
+                    return BibliotecaTile(doc);
                   }
               ).toList(),
               color: Colors.grey[500]
