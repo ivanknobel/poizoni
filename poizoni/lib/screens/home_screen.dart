@@ -38,6 +38,18 @@ class HomeScreen extends StatelessWidget {
           ),
           body: BibliotecaTab(),
           drawer: CustomDrawer(_pageController),
+        ),
+        Scaffold(
+          appBar: AppBar(
+            title: Text(
+              "Encontrar Hospitais",
+              style: TextStyle(color: Colors.white),
+            ),
+            centerTitle: true,
+            textTheme: Theme.of(context).textTheme,
+          ),
+          body: Container(),
+          drawer: CustomDrawer(_pageController),
         )
       ]
     );

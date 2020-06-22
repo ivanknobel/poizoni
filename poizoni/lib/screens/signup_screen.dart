@@ -13,10 +13,12 @@ class _SignupScreenState extends State<SignupScreen> {
   final _senhaController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
         appBar: AppBar(
           title: Text("Criar Conta"),
           centerTitle: true,
@@ -86,9 +88,9 @@ class _SignupScreenState extends State<SignupScreen> {
                             "email": _emailController.text,
                           };
 
-                          model.signUp(user: userData,
+                          model.signUp(userData: userData,
                               pass: _senhaController.text,
-                              onSucess: _onSucess,
+                              onSuccess: _onSucess,
                               onFail: _onFail);
                         };
                       },
@@ -100,14 +102,31 @@ class _SignupScreenState extends State<SignupScreen> {
         )
     );
   }
+  void _onSucess() {
+    _scaffoldKey.currentState.showSnackBar(
+      SnackBar(
+        content: Text("Usuário criado com sucesso!"),
+        backgroundColor: Theme.of(context).primaryColor,
+        duration: Duration(seconds: 2),
+      ),
+    );
+    Future.delayed(Duration(seconds: 2)).then((_){
+      Navigator.of(context).pop();
+    });
+  }
+
+  void _onFail() {
+    _scaffoldKey.currentState.showSnackBar(
+      SnackBar(
+        content: Text("Falha ao criar usuário"),
+        backgroundColor: Colors.redAccent,
+        duration: Duration(seconds: 2),
+      ),
+    );
+
+  }
 }
 
-void _onSucess() {
 
-}
-
-void _onFail() {
-
-}
 
 
