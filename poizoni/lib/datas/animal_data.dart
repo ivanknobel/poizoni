@@ -4,7 +4,8 @@ class AnimalData{
   String id;
 
   String nome;
-  String foto;
+  String desc;
+  List<dynamic> images;
 
   String category;
 
@@ -12,6 +13,7 @@ class AnimalData{
   {
     id = snapshot.documentID;
     nome = snapshot.data["nome"];
-    foto = snapshot.data["foto"];
+    desc = snapshot.data["descricao"];
+    images = snapshot.data["images"];
   }
 }

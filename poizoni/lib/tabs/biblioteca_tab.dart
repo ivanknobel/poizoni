@@ -27,7 +27,7 @@ class BibliotecaTab extends StatelessWidget {
               crossAxisCount: 2,
               mainAxisSpacing: 2.0,
               crossAxisSpacing: 4.0,
-              childAspectRatio: 0.65,
+              childAspectRatio: 2.0,
               ),
             children: dividedTiles,
           );

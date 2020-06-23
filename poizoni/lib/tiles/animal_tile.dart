@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import 'package:poizoni/datas/animal_data.dart';
+import 'package:poizoni/screens/animal_screen.dart';
 import 'package:poizoni/screens/biblioteca_screen.dart';
 
 class AnimalTile extends StatelessWidget {
@@ -12,14 +13,18 @@ class AnimalTile extends StatelessWidget {
   @override
     Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){},
+      onTap: (){
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (context)=>AnimalScreen(animal))
+        );
+      },
       child: Card(
         child: Row(
           children: <Widget>[
             Flexible(
               flex: 1,
               child: Image.network(
-                animal.foto,
+                animal.images[0],
                 fit: BoxFit.cover,
                 height: 100.0,
               ),
