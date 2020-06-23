@@ -4,6 +4,7 @@ import 'package:poizoni/screens/login_screen.dart';
 import 'package:poizoni/tabs/biblioteca_tab.dart';
 import 'package:poizoni/tabs/home_tab.dart';
 import 'package:poizoni/tabs/hospital_tab.dart';
+import 'package:poizoni/tabs/profile_tab.dart';
 import 'package:poizoni/widgets/custom_drawer.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -50,6 +51,18 @@ class HomeScreen extends StatelessWidget {
             textTheme: Theme.of(context).textTheme,
           ),
           body: HospitalTab(),
+          drawer: CustomDrawer(_pageController),
+        ),
+        Scaffold(
+          appBar: AppBar(
+            title: Text(
+              "Perfil",
+              style: TextStyle(color: Colors.white),
+            ),
+            centerTitle: true,
+            textTheme: Theme.of(context).textTheme,
+          ),
+          body: ProfileTab(),
           drawer: CustomDrawer(_pageController),
         )
       ]
