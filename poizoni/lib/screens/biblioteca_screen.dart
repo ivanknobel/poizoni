@@ -26,7 +26,7 @@ class BibliotecaScreen extends StatelessWidget {
                 padding: EdgeInsets.all(4.0),
                 itemCount: snapshot.data.documents.length,
                 itemBuilder: (context, index){
-                  return AnimalTile("list", AnimalData.fromDocument(snapshot.data.documents[index]));
+                  return AnimalTile(AnimalData.fromDocument(snapshot.data.documents[index]));
                 });
           }
         }

@@ -5,10 +5,9 @@ import 'package:poizoni/screens/biblioteca_screen.dart';
 
 class AnimalTile extends StatelessWidget {
 
-  final String type;
   final AnimalData animal;
 
-  AnimalTile(this.type, this.animal);
+  AnimalTile(this.animal);
 
   @override
     Widget build(BuildContext context) {
@@ -22,7 +21,7 @@ class AnimalTile extends StatelessWidget {
         child: Row(
           children: <Widget>[
             Flexible(
-              flex: 1,
+              flex: 2,
               child: Image.network(
                 animal.images[0],
                 fit: BoxFit.cover,
@@ -30,7 +29,7 @@ class AnimalTile extends StatelessWidget {
               ),
             ),
             Flexible(
-              flex: 1,
+              flex: 3,
               child: Container(
                 padding: EdgeInsets.all(8.0),
                 child: Column(
