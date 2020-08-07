@@ -4,10 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class UserModel extends Model {
-
   FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseUser firebaseUser;
   Map<String, dynamic> userData = Map();
+  List<dynamic> phones = List();
 
   // usuario atual
 
@@ -23,14 +23,14 @@ class UserModel extends Model {
     _loadCurrentUser();
   }
 
-   void signUp(
+  void signUp(
       {@required Map<String, dynamic> userData,
       @required String pass,
       @required VoidCallback onSuccess,
-      @required VoidCallback onFail}) async{
+      @required VoidCallback onFail}) async {
     isLoading = true;
     notifyListeners();
-  
+
     _auth
         .createUserWithEmailAndPassword(
             email: userData["email"].trim(), password: pass)
@@ -48,6 +48,7 @@ class UserModel extends Model {
       notifyListeners();
     });
   }
+
   void signIn(
       {@required String email,
       @required String pass,
@@ -56,7 +57,9 @@ class UserModel extends Model {
     isLoading = true;
     notifyListeners();
 
-    _auth.signInWithEmailAndPassword(email: email, password: pass).then((user) async{
+    _auth
+        .signInWithEmailAndPassword(email: email, password: pass)
+        .then((user) async {
       firebaseUser = user;
 
       await _loadCurrentUser();
@@ -64,55 +67,63 @@ class UserModel extends Model {
       onSuccess();
       isLoading = false;
       notifyListeners();
-    }).catchError((e){
+    }).catchError((e) {
       onFail();
       isLoading = false;
       notifyListeners();
     });
   }
 
-  void update(){
+  void addPhone(phone) async{
+    isLoading = true;
 
+    //List phones = List.from(userData["phones"]);
+    phones.add(phone);
+    //userData["phones"] = phones;
+    _saveUserData(userData);
+
+    isLoading = false;
+    notifyListeners();
   }
 
-  bool hasPhones(){
-    List phones = userData["phones"];
-    if (phones.length < 1)
-      return false;
-    else
-      return true;
-  }
-
-  void signOut() async{
+  void signOut() async {
     await _auth.signOut();
 
     userData = Map();
+    phones = List();
     firebaseUser = null;
 
     notifyListeners();
   }
 
-  void recoverPass(String email){
+  void recoverPass(String email) {
     _auth.sendPasswordResetEmail(email: email);
   }
 
-  bool isLoggedIn(){
+  bool isLoggedIn() {
     return firebaseUser != null;
   }
 
-  Future<Null> _saveUserData(Map<String, dynamic> userData) async{
+  Future<Null> _saveUserData(Map<String, dynamic> userData) async {
+    userData["phones"] = phones;
     this.userData = userData;
 
-    await Firestore.instance.collection("users").document(firebaseUser.uid).setData(userData);
+    await Firestore.instance
+        .collection("users")
+        .document(firebaseUser.uid)
+        .setData(userData);
   }
 
-  Future<Null> _loadCurrentUser() async{
-    if (firebaseUser == null)
-      firebaseUser = await _auth.currentUser();
-    if (firebaseUser != null){
-      if (userData["nome"] == null){
-        DocumentSnapshot docUser = await Firestore.instance.collection("users").document(firebaseUser.uid).get();
+  Future<Null> _loadCurrentUser() async {
+    if (firebaseUser == null) firebaseUser = await _auth.currentUser();
+    if (firebaseUser != null) {
+      if (userData["nome"] == null) {
+        DocumentSnapshot docUser = await Firestore.instance
+            .collection("users")
+            .document(firebaseUser.uid)
+            .get();
         userData = docUser.data;
+        phones = List.from(userData["phones"]);
       }
     }
     notifyListeners();

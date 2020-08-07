@@ -37,7 +37,7 @@ class ProfileTab extends StatelessWidget {
                     ),
                     Text(
                       model.userData["nome"],
-                      style: TextStyle(fontSize: 20),
+                      style: TextStyle(fontSize: 22),
                     ),
                     SizedBox(
                       height: 100,
@@ -55,18 +55,31 @@ class ProfileTab extends StatelessWidget {
                 ),
                 Text(
                   "Telefones de emergência:",
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(fontSize: 18),
                 ),
-                ListView.builder(
+                SizedBox(height: 20,),
+                ListView.separated(
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
-                    itemCount: model.userData["phones"].length + 1,
+                    itemCount: model.phones.length + 1,
                     itemBuilder: (context, index) {
-                      if (index == model.userData["phones"].length)
-                        return Text("Acabou");
+                      if (index == model.phones.length)
+                        return MaterialButton(
+                          onPressed: (){
+                            model.addPhone({
+                              "label" : "teste",
+                              "number" : "99999993"
+                            });
+                          },
+                          child: Text("Novo"),
+                        );
                       else
-                        return _phoneCard(context, index);
-                    })
+                        return _phoneCard(context, model.phones[index]);
+                    },
+                  separatorBuilder: (context, index){
+                      return Divider();
+                  },
+                ),
               ],
             ),
           );
@@ -74,7 +87,32 @@ class ProfileTab extends StatelessWidget {
     );
   }
 
-  Widget _phoneCard(context, index) {
-    return Text("TELEFONEEEEE");
+  Widget _phoneCard(context, phone) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+            phone["label"],
+          style: TextStyle(
+            //TODO: style do telefone
+          ),
+        ),
+        Row(
+          children: [
+            Text(
+              phone["number"],
+              style: TextStyle(
+
+              ),
+            ),
+            IconButton(
+              icon: Icon(Icons.phone),
+              onPressed: (){},
+            )
+          ],
+
+        )
+      ],
+    );
   }
 }
