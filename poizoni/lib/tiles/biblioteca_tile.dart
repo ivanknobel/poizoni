@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import "package:flutter/material.dart";
 import 'package:poizoni/screens/biblioteca_screen.dart';
 
+//Tile de cada tipo de animal
 class BibliotecaTile extends StatelessWidget {
 
   final DocumentSnapshot snapshot;

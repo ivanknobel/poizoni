@@ -71,6 +71,18 @@ class UserModel extends Model {
     });
   }
 
+  void update(){
+
+  }
+
+  bool hasPhones(){
+    List phones = userData["phones"];
+    if (phones.length < 1)
+      return false;
+    else
+      return true;
+  }
+
   void signOut() async{
     await _auth.signOut();
 

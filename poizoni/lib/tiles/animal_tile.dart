@@ -3,6 +3,7 @@ import 'package:poizoni/datas/animal_data.dart';
 import 'package:poizoni/screens/animal_screen.dart';
 import 'package:poizoni/screens/biblioteca_screen.dart';
 
+//Tile pra cada animal
 class AnimalTile extends StatelessWidget {
 
   final AnimalData animal;
