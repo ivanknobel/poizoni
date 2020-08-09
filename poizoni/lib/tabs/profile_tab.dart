@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:poizoni/models/user_model.dart';
+import 'package:poizoni/screens/edit_user_screen.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -26,7 +27,6 @@ class ProfileTab extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    //TODO: adicionar imagem no usuario
                     Container(
                       width: 100,
                       height: 100,
@@ -53,7 +53,11 @@ class ProfileTab extends StatelessWidget {
                     ),
                     IconButton(
                       icon: Icon(Icons.edit),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context)=>EditUserScreen())
+                        );
+                      },
                       alignment: Alignment.centerRight,
                     )
                   ],
@@ -73,9 +77,12 @@ class ProfileTab extends StatelessWidget {
                     itemBuilder: (context, index) {
                       if (index == model.phones.length)
                         return MaterialButton(
-                          //TODO: mandar isso pra página de editar perfil
                           child: Text("Novo"),
-                          onPressed: (){},
+                          onPressed: (){
+                            Navigator.of(context).push(
+                                MaterialPageRoute(builder: (context)=>EditUserScreen())
+                            );
+                          },
                         );
                       else
                         return _phoneCard(context, model.phones[index]);
