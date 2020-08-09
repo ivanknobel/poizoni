@@ -86,7 +86,8 @@ class _SignupScreenState extends State<SignupScreen> {
                           Map<String, dynamic> userData = {
                             "nome": _nomeController.text,
                             "email": _emailController.text,
-                            "phones": List()
+                            "phones": List(),
+                            "img" : "https://firebasestorage.googleapis.com/v0/b/poizoni.appspot.com/o/profile_pictures%2Fdefault.jpg?alt=media&token=e0685e42-7e23-4eb6-acf7-0b49e055f0a5",
                           };
 
                           model.signUp(userData: userData,

@@ -2,8 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:poizoni/models/user_model.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProfileTab extends StatelessWidget {
+
+  final _labelController = TextEditingController();
+  final _numberController = TextEditingController();
+
+  Map<String, String> _phone;
+
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant<UserModel>(
@@ -27,7 +34,8 @@ class ProfileTab extends StatelessWidget {
                         shape: BoxShape.circle,
                         image: DecorationImage(
                             image: NetworkImage(
-                                "https://miro.medium.com/max/3200/1*g09N-jl7JtVjVZGcd-vL2g.jpeg"),
+                              model.userData["img"]
+                            ),
                             fit: BoxFit.cover),
                       ),
                     ),
@@ -65,13 +73,9 @@ class ProfileTab extends StatelessWidget {
                     itemBuilder: (context, index) {
                       if (index == model.phones.length)
                         return MaterialButton(
-                          onPressed: (){
-                            model.addPhone({
-                              "label" : "teste",
-                              "number" : "99999993"
-                            });
-                          },
+                          //TODO: mandar isso pra página de editar perfil
                           child: Text("Novo"),
+                          onPressed: (){},
                         );
                       else
                         return _phoneCard(context, model.phones[index]);
@@ -107,12 +111,14 @@ class ProfileTab extends StatelessWidget {
             ),
             IconButton(
               icon: Icon(Icons.phone),
-              onPressed: (){},
+              onPressed: (){
+                launch("tel:${phone["number"]}");
+              },
             )
           ],
-
         )
       ],
     );
   }
+
 }
