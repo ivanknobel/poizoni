@@ -38,6 +38,7 @@ dependencies:
   url_launcher: ^5.5.0
   flutter_launcher_icons: ^0.7.5
   firebase_storage: ^3.1.6
+  flutter_map:
 
 
 dev_dependencies:
