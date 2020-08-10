@@ -13,7 +13,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PageView(
+      return PageView(
       controller: _pageController,
       physics: NeverScrollableScrollPhysics(),
       children: <Widget>[
