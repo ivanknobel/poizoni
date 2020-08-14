@@ -78,6 +78,8 @@ class _EditUserScreenState extends State<EditUserScreen> {
                           icon: Icon(Icons.save),
                           onPressed: () {
                             //TODO: salvar as mudancas
+                            _requestSave();
+                            //Navigator.pop(context);
                           },
                           alignment: Alignment.centerRight,
                         )
@@ -234,6 +236,38 @@ class _EditUserScreenState extends State<EditUserScreen> {
                   child: Text("Sim"),
                   onPressed: (){
                     widget.model.startEdit();
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            );
+          }
+      );
+      return Future.value(false);
+    } else {
+      return Future.value(true);
+    }
+  }
+
+  Future<bool> _requestSave(){
+    if (_userEdited){
+      showDialog(context: context,
+          builder: (context){
+            return AlertDialog(
+              title: Text("Salvar Alterações?"),
+              content: Text("Se salvar, as informações anteriores serão perdidas."),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text("Cancelar"),
+                  onPressed: (){
+                    Navigator.pop(context);
+                  },
+                ),
+                FlatButton(
+                  child: Text("Sim"),
+                  onPressed: (){
+                    widget.model.saveEdit();
                     Navigator.pop(context);
                     Navigator.pop(context);
                   },

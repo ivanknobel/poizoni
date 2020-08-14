@@ -125,6 +125,13 @@ class UserModel extends Model {
     editedPhones = List.from(phones);
   }
 
+  void saveEdit(){
+    //editedUserData["phones"] = editedPhones;
+    //userData = editedUserData;
+    _saveUserData(editedUserData);
+    notifyListeners();
+  }
+
   void changeName(text){
     editedUserData["nome"] = text;
   }
