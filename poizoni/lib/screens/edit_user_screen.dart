@@ -7,16 +7,18 @@ class EditUserScreen extends StatefulWidget {
 
   @override
   _EditUserScreenState createState() => _EditUserScreenState();
+
+  final UserModel model;
+
+  EditUserScreen(this.model);
 }
 
 class _EditUserScreenState extends State<EditUserScreen> {
 
   final _nameController = TextEditingController();
-  List<Map> controllers = List();
 
   bool _userEdited = false;
-  Map _editedUserData = Map();
-  List _phones = List();
+
 
   @override
   Widget build(BuildContext context) {
@@ -29,11 +31,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
 
         ),
         body: SingleChildScrollView(
-          child: ScopedModelDescendant<UserModel>(
-            builder: (context, child, model){
-              _editedUserData = model.userData;
-              _phones = List.from(model.userData["phones"]);
-              return Container(
+          child: Container(
                 padding: EdgeInsets.all(20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,7 +46,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
                             shape: BoxShape.circle,
                             image: DecorationImage(
                                 image: NetworkImage(
-                                    model.userData["img"]
+                                    widget.model.userData["img"]
                                 ),
                                 fit: BoxFit.cover),
                           ),
@@ -57,9 +55,20 @@ class _EditUserScreenState extends State<EditUserScreen> {
                           height: 100,
                           width: 20,
                         ),
-                        Text( //TODO: transformar isso em um textField pra mudar o nome
-                          model.userData["nome"],
-                          style: TextStyle(fontSize: 22),
+                        SizedBox(
+                          width: 140,
+                          child: TextFormField(
+                            decoration: InputDecoration(labelText: "Nome"),
+                            initialValue: widget.model.editedUserData["nome"],
+                            onChanged: (text){
+                              _userEdited = true;
+                              setState(() {
+                                widget.model.changeName(text);
+                              });
+                            },
+                            maxLength: 30,
+
+                          )
                         ),
                         SizedBox(
                           height: 100,
@@ -85,9 +94,9 @@ class _EditUserScreenState extends State<EditUserScreen> {
                     ListView.separated(
                       scrollDirection: Axis.vertical,
                       shrinkWrap: true,
-                      itemCount: model.phones.length + 1,
+                      itemCount: widget.model.editedUserData["phones"].length + 1,
                       itemBuilder: (context, index) {
-                        if (index == model.phones.length)
+                        if (index == widget.model.editedUserData["phones"].length)
                           return _newPhoneCard(context, index);
                         return _editPhoneCard(context, index);
                       },
@@ -97,42 +106,44 @@ class _EditUserScreenState extends State<EditUserScreen> {
                     ),
                   ],
                 ),
-              );
-            },
+              ),
           ),
         ),
-      ),
     );
   }
 
   Widget _editPhoneCard(context, index){
-    //TODO: mesma coisa que os telefones mas campos de texto para editar (vazios se for um novo) e botao para excluir
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TextFormField(
-          decoration: InputDecoration(labelText: "Etiqueta"),
-          onChanged: (text){
-            _userEdited = true;
-            setState(() {
-              _phones[index]["label"] = text;
-            });
-          },
-          maxLength: 30,
-          initialValue: _phones[index]["label"],
+        SizedBox(
+          width: 300,
+          child: TextFormField(
+
+            decoration: InputDecoration(labelText: "Etiqueta"),
+            onChanged: (text){
+              _userEdited = true;
+              setState(() {
+                widget.model.changePhoneLabel(index, text);
+              });
+            },
+            maxLength: 30,
+            initialValue: widget.model.editedUserData["phones"][index]["label"],
+          ),
         ),
         Row(
           children: [
             SizedBox(
-              width: 100,
+              width: 150,
               child: TextFormField(
                 decoration: InputDecoration(labelText: "Número"),
                 onChanged: (text){
                   _userEdited = true;
                   setState(() {
-                    _phones[index]["phone"] = text;
+                    widget.model.changePhoneNumber(index, text);
                   });
                 },
-                initialValue: _phones[index]["phone"],
+                initialValue: widget.model.editedUserData["phones"][index]["number"],
                 keyboardType: TextInputType.phone,
               ),
             ),
@@ -147,21 +158,61 @@ class _EditUserScreenState extends State<EditUserScreen> {
   }
 
   Widget _newPhoneCard(context, index){
-    //TODO: mesma coisa que os telefones mas campos de texto para editar (vazios se for um novo) e botao para excluir
-    _phones.add({"label": "", "number":""}); //inclui um vazio pra ser editado
-    return Column(
-      children: [
-        TextFormField(
-          decoration: InputDecoration(labelText: "Etiqueta"),
-          onChanged: (text){
-            _userEdited = true;
-            setState(() {
-              _phones[index]["label"] = text;
-            });
-          },
-          maxLength: 30,
-        )
-      ],
+    var _formKey = GlobalKey<FormState>();
+    var _labelController = TextEditingController();
+    var _numberController = TextEditingController();
+
+    return Form(
+      key: _formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: 300,
+            child: TextFormField(
+              controller: _labelController,
+              decoration: InputDecoration(labelText: "Etiqueta"),
+              maxLength: 30,
+              // ignore: missing_return
+              validator: (text) {
+                if (text.isEmpty)
+                  return "Etiqueta inválida!";
+              },
+            ),
+          ),
+          Row(
+            children: [
+              SizedBox(
+                width: 150,
+                child: TextFormField(
+                  controller: _numberController,
+                  decoration: InputDecoration(labelText: "Número"),
+                  keyboardType: TextInputType.phone,
+                  // ignore: missing_return
+                  validator: (text) {
+                    if (text.isEmpty)
+                      return "Número inválido!";
+                  },
+                ),
+              ),
+              IconButton(
+                onPressed: (){
+                  if (_formKey.currentState.validate()){
+                    _userEdited = true;
+                    setState(() {
+                      widget.model.addPhone({
+                        "label" : _labelController.text,
+                        "number" : _numberController.text.toString()
+                      });
+                    });
+                  }
+                },
+                icon: Icon(Icons.add),
+              )
+            ],
+          )
+        ],
+      ),
     );
   }
 
@@ -182,6 +233,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
                 FlatButton(
                   child: Text("Sim"),
                   onPressed: (){
+                    widget.model.startEdit();
                     Navigator.pop(context);
                     Navigator.pop(context);
                   },

@@ -43,6 +43,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       if (text.isEmpty)
                         return "Nome inválido!";
                     },
+                    maxLength: 30,
                   ),
                   SizedBox(height: 16.0),
                   TextFormField(

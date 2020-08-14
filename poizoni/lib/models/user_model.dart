@@ -9,6 +9,9 @@ class UserModel extends Model {
   Map<String, dynamic> userData = Map();
   List<dynamic> phones = List();
 
+  Map<String, dynamic> editedUserData = Map();
+  List<dynamic> editedPhones = List();
+
   // usuario atual
 
   bool isLoading = false;
@@ -74,18 +77,6 @@ class UserModel extends Model {
     });
   }
 
-  void addPhone(phone) async{
-    isLoading = true;
-
-    //List phones = List.from(userData["phones"]);
-    phones.add(phone);
-    //userData["phones"] = phones;
-    _saveUserData(userData);
-
-    isLoading = false;
-    notifyListeners();
-  }
-
   void signOut() async {
     await _auth.signOut();
 
@@ -127,5 +118,32 @@ class UserModel extends Model {
       }
     }
     notifyListeners();
+  }
+
+  void startEdit(){
+    editedUserData = Map.from(userData);
+    editedPhones = List.from(phones);
+  }
+
+  void changeName(text){
+    editedUserData["nome"] = text;
+  }
+
+  void addPhone(phone){
+    editedPhones.add(phone);
+    editedUserData["phones"] = editedPhones;
+  }
+
+  void changePhoneLabel(index, text){
+    editedUserData["phones"][index]["label"] = text;
+  }
+
+  void changePhoneNumber(index, text){
+    editedUserData["phones"][index]["number"] = text;
+  }
+
+  void deletePhone(index){
+    editedPhones.removeAt(index);
+    editedUserData["phones"] = editedPhones;
   }
 }

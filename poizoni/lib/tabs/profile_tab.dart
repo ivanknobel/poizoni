@@ -43,9 +43,12 @@ class ProfileTab extends StatelessWidget {
                       height: 100,
                       width: 20,
                     ),
-                    Text(
-                      model.userData["nome"],
-                      style: TextStyle(fontSize: 22),
+                    SizedBox(
+                      width: 100,
+                      child: Text(
+                        model.userData["nome"],
+                        style: TextStyle(fontSize: 22),
+                      ),
                     ),
                     SizedBox(
                       height: 100,
@@ -54,9 +57,7 @@ class ProfileTab extends StatelessWidget {
                     IconButton(
                       icon: Icon(Icons.edit),
                       onPressed: () {
-                        Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context)=>EditUserScreen())
-                        );
+                        _editProfile(context);
                       },
                       alignment: Alignment.centerRight,
                     )
@@ -79,9 +80,7 @@ class ProfileTab extends StatelessWidget {
                         return MaterialButton(
                           child: Text("Novo"),
                           onPressed: (){
-                            Navigator.of(context).push(
-                                MaterialPageRoute(builder: (context)=>EditUserScreen())
-                            );
+                            _editProfile(context);
                           },
                         );
                       else
@@ -125,6 +124,13 @@ class ProfileTab extends StatelessWidget {
           ],
         )
       ],
+    );
+  }
+
+  _editProfile(context){
+    UserModel.of(context).startEdit();
+    Navigator.of(context).push(
+        MaterialPageRoute(builder: (context)=>EditUserScreen(UserModel.of(context)))
     );
   }
 
