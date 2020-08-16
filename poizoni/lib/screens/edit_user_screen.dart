@@ -39,17 +39,25 @@ class _EditUserScreenState extends State<EditUserScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Container( //TODO: botar isso num gestureDetector pra dar pra clicar e mudar/excluir a foto
-                          width: 100,
-                          height: 100,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                                image: NetworkImage(
-                                    widget.model.userData["img"]
-                                ),
-                                fit: BoxFit.cover),
+                        GestureDetector(
+                          child: Container(
+                            child: Center(
+                              child: Text("Editar imagem"), //TODO: deixar mais bonito isso
+                            ),
+                            width: 100,
+                            height: 100,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                  image: NetworkImage(
+                                      widget.model.userData["img"]
+                                  ),
+                                  fit: BoxFit.cover),
+                            ),
                           ),
+                          onTap: (){
+                            _changeImage(context);
+                          },
                         ),
                         SizedBox(
                           height: 100,
@@ -78,7 +86,10 @@ class _EditUserScreenState extends State<EditUserScreen> {
                           icon: Icon(Icons.save),
                           onPressed: () {
                             //TODO: salvar as mudancas
-                            _requestSave();
+                            if (_userEdited)
+                              _requestSave();
+                            else
+                              Navigator.pop(context);
                             //Navigator.pop(context);
                           },
                           alignment: Alignment.centerRight,
@@ -121,7 +132,6 @@ class _EditUserScreenState extends State<EditUserScreen> {
         SizedBox(
           width: 300,
           child: TextFormField(
-
             decoration: InputDecoration(labelText: "Etiqueta"),
             onChanged: (text){
               _userEdited = true;
@@ -150,7 +160,12 @@ class _EditUserScreenState extends State<EditUserScreen> {
               ),
             ),
             IconButton(
-              onPressed: (){},
+              onPressed: (){
+                _userEdited = true;
+                setState(() {
+                  widget.model.deletePhone(index);
+                });
+              },
               icon: Icon(Icons.delete),
             )
           ],
@@ -215,6 +230,66 @@ class _EditUserScreenState extends State<EditUserScreen> {
           )
         ],
       ),
+    );
+  }
+
+  _changeImage(context){
+    showModalBottomSheet(
+        context: context,
+        builder: (context){
+          return BottomSheet(
+            onClosing: (){},
+            builder: (context){
+              return Container(
+                padding: EdgeInsets.all(10.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: FlatButton(
+                        child: Text("Editar",
+                          style: TextStyle(color:Colors.green, fontSize: 20.0),),
+                        onPressed: (){
+                          //TODO: mudar a imagem
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: FlatButton(
+                        child: Text("Remover",
+                          style: !widget.model.hasImage()?
+                          TextStyle(color: Colors.grey, fontSize:  20.0, fontWeight: FontWeight.normal) :
+                          TextStyle(color:Colors.green, fontSize: 20.0),),
+                        onPressed:
+                        !widget.model.hasImage()?
+                        (){} :
+                            (){
+                          //TODO: remover a imagem
+                              _userEdited = true;
+                              setState(() {
+                                widget.model.removeImage();
+                              });
+                              Navigator.pop(context);
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: FlatButton(
+                        child: Text("Cancelar",
+                          style: TextStyle(color:Colors.green, fontSize: 20.0),),
+                        onPressed: (){
+                            Navigator.pop(context);
+                          })
+                      ),
+                  ],
+                ),
+              );
+            },
+          );
+        }
     );
   }
 

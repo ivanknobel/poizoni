@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -11,6 +12,8 @@ class UserModel extends Model {
 
   Map<String, dynamic> editedUserData = Map();
   List<dynamic> editedPhones = List();
+
+  static const String default_img = "https://firebasestorage.googleapis.com/v0/b/poizoni.appspot.com/o/profile_pictures%2Fdefault.jpg?alt=media&token=e0685e42-7e23-4eb6-acf7-0b49e055f0a5";
 
   // usuario atual
 
@@ -40,6 +43,7 @@ class UserModel extends Model {
         .then((user) async {
       firebaseUser = user;
 
+      userData["img"] = default_img;
       await _saveUserData(userData);
 
       onSuccess();
@@ -126,8 +130,7 @@ class UserModel extends Model {
   }
 
   void saveEdit(){
-    //editedUserData["phones"] = editedPhones;
-    //userData = editedUserData;
+    phones = editedUserData["phones"];
     _saveUserData(editedUserData);
     notifyListeners();
   }
@@ -152,5 +155,18 @@ class UserModel extends Model {
   void deletePhone(index){
     editedPhones.removeAt(index);
     editedUserData["phones"] = editedPhones;
+  }
+
+  bool hasImage(){
+    return userData["img"] != default_img;
+  }
+
+  void _setImage(String link){
+    editedUserData["img"] = link;
+  }
+
+  void removeImage(){
+    //TODO: apagar a imagem anterior do storage
+    _setImage(default_img);
   }
 }
