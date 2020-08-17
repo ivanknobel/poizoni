@@ -7,11 +7,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 class ProfileTab extends StatelessWidget {
 
-  final _labelController = TextEditingController();
-  final _numberController = TextEditingController();
-
-  Map<String, String> _phone;
-
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant<UserModel>(
@@ -19,80 +14,83 @@ class ProfileTab extends StatelessWidget {
         if (!model.isLoggedIn())
           return Container();
         else
-          return Container(
-            padding: EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: 100,
-                      height: 100,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                            image: NetworkImage(
+          if (model.isLoading)
+            return Container(child: Center(child: CircularProgressIndicator(),),);
+          else
+            return Container(
+          padding: EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                    width: 100,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                          image: NetworkImage(
                               model.userData["img"]
-                            ),
-                            fit: BoxFit.cover),
-                      ),
+                          ),
+                          fit: BoxFit.cover),
                     ),
-                    SizedBox(
-                      height: 100,
-                      width: 20,
+                  ),
+                  SizedBox(
+                    height: 100,
+                    width: 20,
+                  ),
+                  SizedBox(
+                    width: 100,
+                    child: Text(
+                      model.userData["nome"],
+                      style: TextStyle(fontSize: 22),
                     ),
-                    SizedBox(
-                      width: 100,
-                      child: Text(
-                        model.userData["nome"],
-                        style: TextStyle(fontSize: 22),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 100,
-                      width: 20,
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.edit),
-                      onPressed: () {
+                  ),
+                  SizedBox(
+                    height: 100,
+                    width: 20,
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: () {
+                      _editProfile(context);
+                    },
+                    alignment: Alignment.centerRight,
+                  )
+                ],
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                "Telefones de emergência:",
+                style: TextStyle(fontSize: 18),
+              ),
+              SizedBox(height: 20,),
+              ListView.separated(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemCount: model.phones.length + 1,
+                itemBuilder: (context, index) {
+                  if (index == model.phones.length)
+                    return MaterialButton(
+                      child: Text("Novo"),
+                      onPressed: (){
                         _editProfile(context);
                       },
-                      alignment: Alignment.centerRight,
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  "Telefones de emergência:",
-                  style: TextStyle(fontSize: 18),
-                ),
-                SizedBox(height: 20,),
-                ListView.separated(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    itemCount: model.phones.length + 1,
-                    itemBuilder: (context, index) {
-                      if (index == model.phones.length)
-                        return MaterialButton(
-                          child: Text("Novo"),
-                          onPressed: (){
-                            _editProfile(context);
-                          },
-                        );
-                      else
-                        return _phoneCard(context, model.phones[index]);
-                    },
-                  separatorBuilder: (context, index){
-                      return Divider();
-                  },
-                ),
-              ],
-            ),
-          );
+                    );
+                  else
+                    return _phoneCard(context, model.phones[index]);
+                },
+                separatorBuilder: (context, index){
+                  return Divider();
+                },
+              ),
+            ],
+          ),
+        );
       },
     );
   }

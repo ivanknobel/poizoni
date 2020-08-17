@@ -1,8 +1,11 @@
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'package:path/path.dart' as path;
+import 'package:uuid/uuid.dart';
 
 class UserModel extends Model {
   FirebaseAuth _auth = FirebaseAuth.instance;
@@ -129,9 +132,16 @@ class UserModel extends Model {
     editedPhones = List.from(phones);
   }
 
-  void saveEdit(){
+  void saveEdit({File img}) async{
+    isLoading = true;
+    notifyListeners();
+
+    if (img != null)
+      await changeImage(img);
     phones = editedUserData["phones"];
-    _saveUserData(editedUserData);
+    await _saveUserData(editedUserData);
+
+    isLoading = false;
     notifyListeners();
   }
 
@@ -161,12 +171,31 @@ class UserModel extends Model {
     return userData["img"] != default_img;
   }
 
-  void _setImage(String link){
-    editedUserData["img"] = link;
-  }
-
   void removeImage(){
     //TODO: apagar a imagem anterior do storage
-    _setImage(default_img);
+    editedUserData["img"] = default_img;
   }
+
+  Future<Null> changeImage (File img) async{
+    //TODO: apagar a imagem anterior do storage
+
+    var fileExtension = path.extension(img.path);
+
+    var uuid = Uuid().v4;
+
+    final StorageReference firebaseStorageRef =
+      FirebaseStorage.instance.ref().child("profile_pictures/${firebaseUser.uid}/$uuid$fileExtension)}");
+
+    await firebaseStorageRef.putFile(img).onComplete.catchError((onError){
+      print(onError);
+      return false;
+    });
+
+    String url = await firebaseStorageRef.getDownloadURL();
+
+    editedUserData["img"] = url;
+    notifyListeners();
+  }
+
+
 }
