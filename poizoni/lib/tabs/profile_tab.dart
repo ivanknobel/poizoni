@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:poizoni/models/user_model.dart';
 import 'package:poizoni/screens/edit_user_screen.dart';
+import 'package:poizoni/screens/nao_logado_screen.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -11,7 +12,7 @@ class ProfileTab extends StatelessWidget {
     return ScopedModelDescendant<UserModel>(
         builder: (context, child, model) {
           if (!model.isLoggedIn())
-            return Container();
+            return NaoLogadoScreen();
           else if (model.isLoading)
             return Container(
               child: Center(

@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: Colors.green[800], //or set color with: Color(0xFF0000FF)
+      statusBarColor: Colors.green[800],
     ));
     return ScopedModel<UserModel>(
       model: UserModel(),
