@@ -6,6 +6,7 @@ import 'package:poizoni/tabs/home_tab.dart';
 import 'package:poizoni/tabs/hospital_tab.dart';
 import 'package:poizoni/tabs/profile_tab.dart';
 import 'package:poizoni/widgets/custom_drawer.dart';
+import 'package:poizoni/widgets/edit_user_button.dart';
 
 class HomeScreen extends StatelessWidget {
 
@@ -64,6 +65,7 @@ class HomeScreen extends StatelessWidget {
           ),
           body: ProfileTab(),
           drawer: CustomDrawer(_pageController),
+          floatingActionButton: EditUserButton(),
         )
       ]
     );

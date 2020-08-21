@@ -1,9 +1,7 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:poizoni/models/user_model.dart';
-import 'package:scoped_model/scoped_model.dart';
 
 class EditUserScreen extends StatefulWidget {
   @override
@@ -15,9 +13,9 @@ class EditUserScreen extends StatefulWidget {
 }
 
 class _EditUserScreenState extends State<EditUserScreen> {
-  final _nameController = TextEditingController();
 
   bool _userEdited = false;
+  bool _imageChanged = false;
 
   File _imageFile;
 
@@ -26,11 +24,14 @@ class _EditUserScreenState extends State<EditUserScreen> {
     return WillPopScope(
       onWillPop: _requestPop,
       child: Scaffold(
+        floatingActionButton: _saveUserButton(),
         appBar: AppBar(
           title: Text("Editar perfil"),
           centerTitle: true,
         ),
-        body: SingleChildScrollView(
+        body: widget.model.isLoading ?
+            Container(child: Center(child: CircularProgressIndicator(),),) :
+        SingleChildScrollView(
           child: Container(
             padding: EdgeInsets.all(20),
             child: Column(
@@ -50,10 +51,9 @@ class _EditUserScreenState extends State<EditUserScreen> {
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           image: DecorationImage(
-                              image:// _imageFile == null ?
+                              image: !_imageChanged ?
                               NetworkImage(widget.model.editedUserData["img"])
-                              //    : FileImage(_imageFile)
-                              ,
+                                  : FileImage(_imageFile),
                               fit: BoxFit.cover),
                         ),
                       ),
@@ -256,7 +256,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
                         onPressed: () async{
                           _userEdited = true;
                           await _getLocalImage("cam");
-                          Navigator.pop(context);
+                          //Navigator.pop(context);
                         },
                       ),
                     ),
@@ -271,12 +271,12 @@ class _EditUserScreenState extends State<EditUserScreen> {
                             onPressed: () async{
                               _userEdited = true;
                               await _getLocalImage("gal");
-                              Navigator.pop(context);
+                              //Navigator.pop(context);
                             })),
                     Padding(
                       padding: EdgeInsets.all(10.0),
                       child: FlatButton(
-                        child: Text( //TODO: n ta indo quando a imagem ainda não foi mudada no firebase
+                        child: Text(
                           "Remover",
                           style: !widget.model.hasImage() && _imageFile==null
                               ? TextStyle(
@@ -314,10 +314,10 @@ class _EditUserScreenState extends State<EditUserScreen> {
 
     if (imageFile != null){
       setState(() {
-        setState(() {
-          _imageFile = imageFile;
-        });
-        widget.model.changeImage(imageFile);
+        _imageFile = imageFile;
+        _imageChanged = true;
+        //widget.model.changeImage(imageFile);
+        Navigator.pop(context);
       });
     }
   }
@@ -352,6 +352,16 @@ class _EditUserScreenState extends State<EditUserScreen> {
     } else {
       return Future.value(true);
     }
+  }
+
+  Widget _saveUserButton(){
+    return FloatingActionButton(
+      child: Icon(Icons.save, color: Colors.white,),
+      backgroundColor: Theme.of(context).primaryColor,
+      onPressed: (){
+        _requestSave();
+      },
+    );
   }
 
   Future<bool> _requestSave() {
@@ -389,4 +399,6 @@ class _EditUserScreenState extends State<EditUserScreen> {
       return Future.value(true);
     }
   }
+
+
 }

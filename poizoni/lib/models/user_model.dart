@@ -172,12 +172,13 @@ class UserModel extends Model {
   }
 
   void removeImage(){
-    //TODO: apagar a imagem anterior do storage
     editedUserData["img"] = default_img;
   }
 
   Future<Null> changeImage (File img) async{
-    //TODO: apagar a imagem anterior do storage
+
+    //isLoading = true;
+    //notifyListeners();
 
     var fileExtension = path.extension(img.path);
 
@@ -194,6 +195,8 @@ class UserModel extends Model {
     String url = await firebaseStorageRef.getDownloadURL();
 
     editedUserData["img"] = url;
+
+    isLoading = false;
     notifyListeners();
   }
 
