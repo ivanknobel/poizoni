@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:poizoni/screens/home_screen.dart';
 import 'package:flutter/services.dart';
-import 'package:poizoni/screens/login_screen.dart';
-import 'package:poizoni/screens/signup_screen.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 import 'models/user_model.dart';

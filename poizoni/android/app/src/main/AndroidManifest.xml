@@ -9,6 +9,10 @@
         android:name="io.flutter.app.FlutterApplication"
         android:label="poizoni"
         android:icon="@mipmap/ic_launcher">
+
+        <meta-data android:name="com.google.android.get.API_KEY"
+            android:value="AIzaSyD0g0IjEr9pWN4pFOSSjx5Jy5HT6X6ZSrE"/>
+
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
