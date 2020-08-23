@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:poizoni/models/user_model.dart';
 import 'package:poizoni/screens/edit_user_screen.dart';
 import 'package:poizoni/screens/nao_logado_screen.dart';
+import 'package:poizoni/tiles/phone_tile.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -43,13 +44,15 @@ class ProfileTab extends StatelessWidget {
                           height: 100,
                           width: 20,
                         ),
-                        SizedBox(
-                          width: 100,
-                          child: Text(
-                            model.userData["nome"],
-                            style: TextStyle(fontSize: 22),
+                        Flexible(
+                          child: Container(
+                            child: Text(
+                              model.userData["nome"],
+                              style: TextStyle(fontSize: 22),
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
-                        ),
+                        )
                       ],
                     ),
                     SizedBox(
@@ -63,6 +66,7 @@ class ProfileTab extends StatelessWidget {
                       height: 20,
                     ),
                     ListView.separated(
+                      physics: NeverScrollableScrollPhysics(),
                       scrollDirection: Axis.vertical,
                       shrinkWrap: true,
                       itemCount: model.phones.length + 1,
@@ -75,7 +79,7 @@ class ProfileTab extends StatelessWidget {
                             },
                           );
                         else
-                          return _phoneCard(context, model.phones[index]);
+                          return PhoneTile(model.phones[index]);
                       },
                       separatorBuilder: (context, index) {
                         return Divider();
@@ -87,34 +91,6 @@ class ProfileTab extends StatelessWidget {
             );
         },
       );
-  }
-
-  Widget _phoneCard(context, phone) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          phone["label"],
-          style: TextStyle(
-              //TODO: style do telefone
-              ),
-        ),
-        Row(
-          children: [
-            Text(
-              phone["number"],
-              style: TextStyle(),
-            ),
-            IconButton(
-              icon: Icon(Icons.phone),
-              onPressed: () {
-                launch("tel:${phone["number"]}");
-              },
-            )
-          ],
-        )
-      ],
-    );
   }
 
   _editProfile(context) {

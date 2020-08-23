@@ -83,17 +83,6 @@ class _EditUserScreenState extends State<EditUserScreen> {
                       height: 100,
                       width: 20,
                     ),
-                    IconButton(
-                      icon: Icon(Icons.save),
-                      onPressed: () {
-                        if (_userEdited)
-                          _requestSave();
-                        else
-                          Navigator.pop(context);
-                        //Navigator.pop(context);
-                      },
-                      alignment: Alignment.centerRight,
-                    )
                   ],
                 ),
                 SizedBox(
@@ -107,6 +96,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
                   height: 20,
                 ),
                 ListView.separated(
+                  physics: NeverScrollableScrollPhysics(),
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
                   itemCount: widget.model.editedUserData["phones"].length + 1,
@@ -119,6 +109,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
                     return Divider();
                   },
                 ),
+                SizedBox(height: 100,)
               ],
             ),
           ),
@@ -141,7 +132,6 @@ class _EditUserScreenState extends State<EditUserScreen> {
                 widget.model.changePhoneLabel(index, text);
               });
             },
-            maxLength: 30,
             initialValue: widget.model.editedUserData["phones"][index]["label"],
           ),
         ),
@@ -192,11 +182,11 @@ class _EditUserScreenState extends State<EditUserScreen> {
             child: TextFormField(
               controller: _labelController,
               decoration: InputDecoration(labelText: "Etiqueta"),
-              maxLength: 30,
               // ignore: missing_return
               validator: (text) {
                 if (text.isEmpty) return "Etiqueta inválida!";
               },
+              onChanged: (text){setState(() {});},
             ),
           ),
           Row(
