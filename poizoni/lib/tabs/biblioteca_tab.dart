@@ -7,7 +7,7 @@ class BibliotecaTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<QuerySnapshot>(
-      future: Firestore.instance.collection("animais").orderBy("pos").getDocuments(),
+      future: Firestore.instance.collection("animais").getDocuments(),
       builder: (context, snapshot) {
         if (!snapshot.hasData)
           return Center(child: CircularProgressIndicator(),);

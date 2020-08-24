@@ -7,8 +7,11 @@ class AnimalData{
   String desc;
   List<dynamic> images;
   String nomeCientifico;
-  String achou; //o que fazer quando achar o animal na natureza
-  String atacado; //o que fazer ao ser atacado pelo animal
+  Map achou; //o que fazer quando achar o animal na natureza
+  Map atacado; //o que fazer ao ser atacado pelo animal
+  String especies;
+  String prevencao;
+  String sintomas;
 
   String category;
 
@@ -21,5 +24,8 @@ class AnimalData{
     nomeCientifico = snapshot.data["nomeCientifico"];
     achou = snapshot.data["achou"];
     atacado = snapshot.data["atacado"];
+    especies = snapshot.data["especies"];
+    prevencao = snapshot.data["prevencao"];
+    sintomas = snapshot.data["especies"];
   }
 }

@@ -65,7 +65,7 @@ class AnimalScreen extends StatelessWidget {
             Padding(
                 padding: EdgeInsets.symmetric(vertical: 2, horizontal: 8),
                 child: Text(
-                  animal.achou,
+                  animal.achou["simples"],
                   style: TextStyle(),
                   textAlign: TextAlign.justify,
                 )
@@ -80,9 +80,9 @@ class AnimalScreen extends StatelessWidget {
             Padding(
                 padding: EdgeInsets.symmetric(vertical: 2, horizontal: 8),
                 child: Text(
-                  animal.atacado,
+                  animal.atacado["simples"],
                   style: TextStyle(),
-                  textAlign: TextAlign.justify,
+                  textAlign: TextAlign.justify, 
                 )
             ),
           ],
