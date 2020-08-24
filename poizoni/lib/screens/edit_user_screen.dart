@@ -66,8 +66,8 @@ class _EditUserScreenState extends State<EditUserScreen> {
                       height: 100,
                       width: 20,
                     ),
-                    SizedBox(
-                        width: 140,
+                    Container(
+                        width: 200,
                         child: TextFormField(
                           decoration: InputDecoration(labelText: "Nome"),
                           initialValue: widget.model.editedUserData["nome"],
@@ -77,8 +77,9 @@ class _EditUserScreenState extends State<EditUserScreen> {
                               widget.model.changeName(text);
                             });
                           },
-                          maxLength: 30,
-                        )),
+                          style: TextStyle(fontSize: 20),
+                        )
+                    ),
                     SizedBox(
                       height: 100,
                       width: 20,
@@ -133,6 +134,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
               });
             },
             initialValue: widget.model.editedUserData["phones"][index]["label"],
+            style: TextStyle(fontSize: 16),
           ),
         ),
         Row(
@@ -150,6 +152,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
                 initialValue: widget.model.editedUserData["phones"][index]
                     ["number"],
                 keyboardType: TextInputType.phone,
+                style: TextStyle(fontSize: 16),
               ),
             ),
             IconButton(
@@ -186,7 +189,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
               validator: (text) {
                 if (text.isEmpty) return "Etiqueta inválida!";
               },
-              onChanged: (text){setState(() {});},
+              style: TextStyle(fontSize: 16),
             ),
           ),
           Row(
@@ -201,6 +204,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
                   validator: (text) {
                     if (text.isEmpty) return "Número inválido!";
                   },
+                  style: TextStyle(fontSize: 16),
                 ),
               ),
               IconButton(

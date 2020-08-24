@@ -20,7 +20,7 @@ class PhoneTile extends StatelessWidget {
         ),
         Row(
           children: [
-            
+
             Text(
               phone["number"],
               style: TextStyle(),
