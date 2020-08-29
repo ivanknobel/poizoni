@@ -82,7 +82,7 @@ class AnimalScreen extends StatelessWidget {
                 child: Text(
                   animal.atacado["simples"],
                   style: TextStyle(),
-                  textAlign: TextAlign.justify, 
+                  textAlign: TextAlign.justify,
                 )
             ),
           ],
