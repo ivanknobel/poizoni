@@ -36,9 +36,9 @@ class ProfileTab extends StatelessWidget {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             image: DecorationImage(
-                              image: model.userData["img"],
+                              image: NetworkImage(model.userData["img"]),
                                 fit: BoxFit.cover
-                            )
+                            ),
                           ),
                         ),
                         SizedBox(

@@ -25,7 +25,7 @@ class AnimalScreen extends StatelessWidget {
               aspectRatio: 1.3,
               child: Carousel(
                 images: animal.images.map((url) {
-                  NetworkImage(url);
+                  return NetworkImage(url);
                 }).toList(),
                 dotSize: 6,
                 dotSpacing: 15,
