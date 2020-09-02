@@ -5,7 +5,7 @@ import 'package:poizoni/screens/edit_user_screen.dart';
 import 'package:poizoni/screens/nao_logado_screen.dart';
 import 'package:poizoni/tiles/phone_tile.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class ProfileTab extends StatelessWidget {
   @override
@@ -36,8 +36,9 @@ class ProfileTab extends StatelessWidget {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             image: DecorationImage(
-                                image: NetworkImage(model.userData["img"]),
-                                fit: BoxFit.cover),
+                              image: model.userData["img"],
+                                fit: BoxFit.cover
+                            )
                           ),
                         ),
                         SizedBox(

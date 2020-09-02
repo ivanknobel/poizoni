@@ -2,6 +2,7 @@ import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:poizoni/datas/animal_data.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class AnimalScreen extends StatelessWidget {
   final AnimalData animal;
@@ -24,7 +25,7 @@ class AnimalScreen extends StatelessWidget {
               aspectRatio: 1.3,
               child: Carousel(
                 images: animal.images.map((url) {
-                  return NetworkImage(url);
+                  NetworkImage(url);
                 }).toList(),
                 dotSize: 6,
                 dotSpacing: 15,
@@ -33,13 +34,13 @@ class AnimalScreen extends StatelessWidget {
                 autoplay: false,
               ),
             ),
-            Padding(
+            /*Padding(
               padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
               child: Text(
                 animal.nomeCientifico,
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24, fontStyle: FontStyle.italic),
               ),
-            ),
+            ),*/
             Padding(
               padding: EdgeInsets.fromLTRB(8, 4, 8, 0),
               child: Text(
