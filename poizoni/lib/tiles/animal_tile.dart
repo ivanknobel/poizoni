@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
 import 'package:poizoni/datas/animal_data.dart';
 import 'package:poizoni/screens/animal_screen.dart';
-import 'package:poizoni/screens/biblioteca_screen.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 //Tile pra cada animal
 class AnimalTile extends StatelessWidget {
@@ -23,11 +23,12 @@ class AnimalTile extends StatelessWidget {
           children: <Widget>[
             Flexible(
               flex: 2,
-              child: Image.network(
-                animal.images[0],
+              child: FadeInImage.memoryNetwork(
+                placeholder: kTransparentImage,
+                image: animal.images[0],
                 fit: BoxFit.cover,
-                height: 100.0,
-              ),
+                height: 100,
+              )
             ),
             Flexible(
               flex: 3,

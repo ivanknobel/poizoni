@@ -40,6 +40,11 @@ class ProfileTab extends StatelessWidget {
                                 fit: BoxFit.cover
                             ),
                           ),
+                          /*child: FadeInImage.memoryNetwork(
+                              placeholder: kTransparentImage,
+                              image: model.userData["img"],
+                            fit: BoxFit.cover,
+                          ),*/
                         ),
                         SizedBox(
                           height: 100,
