@@ -40,11 +40,6 @@ class ProfileTab extends StatelessWidget {
                                 fit: BoxFit.cover
                             ),
                           ),
-                          /*child: FadeInImage.memoryNetwork(
-                              placeholder: kTransparentImage,
-                              image: model.userData["img"],
-                            fit: BoxFit.cover,
-                          ),*/
                         ),
                         SizedBox(
                           height: 100,
@@ -54,7 +49,10 @@ class ProfileTab extends StatelessWidget {
                           child: Container(
                             child: Text(
                               model.userData["nome"],
-                              style: TextStyle(fontSize: 22),
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                  fontSize: 30
+                              ),
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
@@ -66,7 +64,10 @@ class ProfileTab extends StatelessWidget {
                     ),
                     Text(
                       "Telefones de emergência:",
-                      style: TextStyle(fontSize: 18),
+                      style: TextStyle(
+                          fontSize: 26,
+                        fontWeight: FontWeight.w400
+                      ),
                     ),
                     SizedBox(
                       height: 20,
