@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:poizoni/screens/biblioteca_screen.dart';
-import 'package:poizoni/screens/login_screen.dart';
 import 'package:poizoni/tabs/biblioteca_tab.dart';
 import 'package:poizoni/tabs/home_tab.dart';
 import 'package:poizoni/tabs/hospital_tab.dart';

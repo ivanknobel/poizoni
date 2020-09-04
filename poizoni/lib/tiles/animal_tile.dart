@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
 import 'package:poizoni/datas/animal_data.dart';
 import 'package:poizoni/screens/animal_screen.dart';
-import 'package:poizoni/screens/biblioteca_screen.dart';
+//import 'package:poizoni/screens/biblioteca_screen.dart';
 
 class AnimalTile extends StatelessWidget {
 
