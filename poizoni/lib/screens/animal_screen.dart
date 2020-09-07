@@ -41,7 +41,7 @@ class AnimalScreen extends StatelessWidget {
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24, fontStyle: FontStyle.italic),
               ),
             ),*/
-            Padding(
+            /*Padding(
               padding: EdgeInsets.fromLTRB(8, 4, 8, 0),
               child: Text(
                 "Descrição: ",
@@ -85,7 +85,24 @@ class AnimalScreen extends StatelessWidget {
                   style: TextStyle(),
                   textAlign: TextAlign.justify,
                 )
-            ),
+            ),*/
+            ExpansionPanelList(
+              children: [
+                ExpansionPanel(
+                  headerBuilder: (context, isExpanded){
+                    return ListTile(
+                      title: Text(
+                        "descrição"
+                      ),
+                    );
+                  },
+                  body: ListTile(
+                    subtitle: Text(animal.desc),
+                  ),
+                  
+                )
+              ],
+            )
           ],
         ));
   }
