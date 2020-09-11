@@ -22,7 +22,6 @@ class _AnimalExpansionPanelState extends State<AnimalExpansionPanel> {
       expansionCallback: (int index, bool isExpanded) {
         setState(() {
           widget.data[index].isExpanded = !isExpanded;
-          print("INDEX : $index ... $isExpanded");
         });
       },
       children: widget.data.map<ExpansionPanel>((ExpansionPanelItem item){
@@ -33,7 +32,21 @@ class _AnimalExpansionPanelState extends State<AnimalExpansionPanel> {
             );
           },
           body: ListTile(
-            title: Text(item.expandedValue),
+            title: Text(
+              !item.showMore?
+              item.expandedValue : item.details,
+              style: TextStyle(),
+              textAlign: TextAlign.justify,
+            ),
+            trailing: item.details=="" ?
+            null :
+            !item.showMore ?
+            Icon(Icons.add) : Icon(Icons.remove),
+            onTap: (){
+              setState(() {
+                item.showMore = !item.showMore;
+              });
+            },
           ),
           isExpanded: item.isExpanded,
         );

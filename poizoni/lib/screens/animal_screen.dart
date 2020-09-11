@@ -34,7 +34,7 @@ class _AnimalScreenState extends State<AnimalScreen> {
               aspectRatio: 1.3,
               child: Carousel(
                 images: widget.animal.images.map((url) {
-                  return NetworkImage(url);
+                  return NetworkImage(url); 
                 }).toList(),
                 dotSize: 6,
                 dotSpacing: 15,
@@ -45,7 +45,8 @@ class _AnimalScreenState extends State<AnimalScreen> {
             ),
             Container(
               child: AnimalExpansionPanel(data),
-            )
+            ),
+            SizedBox(height: 100,)
           ],
         )));
   }
