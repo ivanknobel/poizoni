@@ -2,30 +2,39 @@ import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:poizoni/datas/animal_data.dart';
+import 'package:poizoni/datas/expansion_panel_item.dart';
+import 'package:poizoni/widgets/animal_expansion_panel.dart';
 import 'package:transparent_image/transparent_image.dart';
 
-class AnimalScreen extends StatelessWidget {
+class AnimalScreen extends StatefulWidget {
   final AnimalData animal;
 
   AnimalScreen(this.animal);
 
   @override
-  Widget build(BuildContext context) {
+  _AnimalScreenState createState() => _AnimalScreenState();
+}
 
+class _AnimalScreenState extends State<AnimalScreen> {
+  @override
+  Widget build(BuildContext context) {
     final Color primaryColor = Theme.of(context).primaryColor;
+
+    List<ExpansionPanelItem> data = List.from(widget.animal.showData());
 
     return Scaffold(
         appBar: AppBar(
-          title: Text(animal.nome),
+          title: Text(widget.animal.nome),
           centerTitle: true,
         ),
-        body: ListView(
+        body: SingleChildScrollView(
+            child: Column(
           children: <Widget>[
             AspectRatio(
               aspectRatio: 1.3,
               child: Carousel(
-                images: animal.images.map((url) {
-                  return NetworkImage(url);
+                images: widget.animal.images.map((url) {
+                  return NetworkImage(url); 
                 }).toList(),
                 dotSize: 6,
                 dotSpacing: 15,
@@ -34,59 +43,13 @@ class AnimalScreen extends StatelessWidget {
                 autoplay: false,
               ),
             ),
-            /*Padding(
-              padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-              child: Text(
-                animal.nomeCientifico,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24, fontStyle: FontStyle.italic),
-              ),
-            ),*/
-            Padding(
-              padding: EdgeInsets.fromLTRB(8, 4, 8, 0),
-              child: Text(
-                "Descrição: ",
-                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
-              ),
+            Container(
+              child: AnimalExpansionPanel(data),
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 2, horizontal: 8),
-              child: Text(
-                animal.desc,
-                style: TextStyle(),
-                textAlign: TextAlign.justify,
-              )
-            ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(8, 4, 8, 0),
-              child: Text(
-                "O que fazer ao achar: ",
-                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
-              ),
-            ),
-            Padding(
-                padding: EdgeInsets.symmetric(vertical: 2, horizontal: 8),
-                child: Text(
-                  animal.achou["simples"],
-                  style: TextStyle(),
-                  textAlign: TextAlign.justify,
-                )
-            ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(8, 4, 8, 0),
-              child: Text(
-                "O que fazer caso seja atacado: ",
-                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
-              ),
-            ),
-            Padding(
-                padding: EdgeInsets.symmetric(vertical: 2, horizontal: 8),
-                child: Text(
-                  animal.atacado["simples"],
-                  style: TextStyle(),
-                  textAlign: TextAlign.justify,
-                )
-            ),
+            SizedBox(height: 100,)
           ],
-        ));
+        )));
   }
+
 }
+

@@ -1,34 +1,34 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import "package:flutter/material.dart";
-import 'package:poizoni/datas/animal_data.dart';
-import 'package:poizoni/screens/animal_screen.dart';
+import 'package:poizoni/screens/category_screen.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 //Tile pra cada animal
-class AnimalTile extends StatelessWidget {
+class CategoryTile extends StatelessWidget {
 
-  final AnimalData animal;
+  final DocumentSnapshot snapshot;
 
-  AnimalTile(this.animal);
+  CategoryTile(this.snapshot);
 
   @override
-    Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
         Navigator.of(context).push(
-            MaterialPageRoute(builder: (context)=>AnimalScreen(animal))
+            MaterialPageRoute(builder: (context)=>CategoryScreen(snapshot))
         );
       },
       child: Card(
         child: Row(
           children: <Widget>[
             Flexible(
-              flex: 2,
-              child: FadeInImage.memoryNetwork(
-                placeholder: kTransparentImage,
-                image: animal.images[0],
-                fit: BoxFit.cover,
-                height: 100,
-              )
+                flex: 2,
+                child: FadeInImage.memoryNetwork(
+                  placeholder: kTransparentImage,
+                  image: snapshot.data["icon"],
+                  fit: BoxFit.cover,
+                  height: 100,
+                )
             ),
             Flexible(
               flex: 3,
@@ -38,9 +38,9 @@ class AnimalTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      animal.nome,
+                      snapshot.data["title"],
                       style: TextStyle(
-                          fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w500,
                         fontSize: 16
                       ),
                     ),
