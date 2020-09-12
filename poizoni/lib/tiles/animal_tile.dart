@@ -23,6 +23,7 @@ class AnimalTile extends StatelessWidget {
           children: <Widget>[
             Flexible(
               flex: 2,
+              fit: FlexFit.tight,
               child: FadeInImage.memoryNetwork(
                 placeholder: kTransparentImage,
                 image: animal.images[0],

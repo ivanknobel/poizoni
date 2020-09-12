@@ -18,12 +18,30 @@ class EditUserButton extends StatelessWidget {
             ),
             backgroundColor: Theme.of(context).primaryColor,
             onPressed: () {
-              model.startEdit();
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => EditUserScreen(model)));
+              //model.startEdit();
+              //Navigator.of(context).push(MaterialPageRoute(
+              //    builder: (context) => EditUserScreen(model)));
+              _editProfile(context, model);
             },
           );
       },
     );
+  }
+
+  _editProfile(context, model) async{
+    model.startEdit();
+
+    final edited = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => EditUserScreen(model)),
+    );
+
+    if (edited)
+      Scaffold.of(context).showSnackBar(
+          SnackBar(content: Text("Usuário editado com sucesso!"),
+            backgroundColor: Colors.green,
+            duration: Duration(seconds: 2),
+          )
+      );
   }
 }

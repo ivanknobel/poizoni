@@ -23,7 +23,7 @@ class ProfileTab extends StatelessWidget {
           else
             return SingleChildScrollView(
               child: Container(
-                padding: EdgeInsets.all(20),
+                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -50,7 +50,7 @@ class ProfileTab extends StatelessWidget {
                             child: Text(
                               model.userData["nome"],
                               style: TextStyle(
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.w400,
                                   fontSize: 30
                               ),
                               overflow: TextOverflow.ellipsis,
@@ -65,33 +65,25 @@ class ProfileTab extends StatelessWidget {
                     Text(
                       "Telefones de emergência:",
                       style: TextStyle(
-                          fontSize: 26,
-                        fontWeight: FontWeight.w400
+                          fontSize: 22,
                       ),
                     ),
                     SizedBox(
-                      height: 20,
+                      height: 10,
                     ),
-                    ListView.separated(
+                    ListView.builder(
                       physics: NeverScrollableScrollPhysics(),
                       scrollDirection: Axis.vertical,
                       shrinkWrap: true,
-                      itemCount: model.phones.length + 1,
+                      itemCount: model.phones.length,
                       itemBuilder: (context, index) {
-                        if (index == model.phones.length)
-                          return MaterialButton(
-                            child: Text("Novo"),
-                            onPressed: () {
-                              _editProfile(context);
-                            },
-                          );
-                        else
                           return PhoneTile(model.phones[index]);
                       },
-                      separatorBuilder: (context, index) {
-                        return Divider();
-                      },
                     ),
+                    SizedBox(height: 10,),
+                    Center(
+                      child: _newButton(context, model),
+                    )
                   ],
                 ),
               ),
@@ -100,9 +92,36 @@ class ProfileTab extends StatelessWidget {
       );
   }
 
-  _editProfile(context) {
-    UserModel.of(context).startEdit();
-    Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => EditUserScreen(UserModel.of(context))));
+  Widget _newButton(context, model){
+    return Container(
+      child: MaterialButton(
+        child: Text(
+          "Novo",
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.normal),
+        ),
+        color: Colors.green[400],
+        onPressed: () {
+          _editProfile(context, model);
+        },
+      ),
+      width: 200,
+    );
+  }
+
+  _editProfile(context, model) async{
+    model.startEdit();
+
+    final edited = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => EditUserScreen(model)),
+    );
+
+    if (edited)
+      Scaffold.of(context).showSnackBar(
+          SnackBar(content: Text("Usuário editado com sucesso!"),
+            backgroundColor: Colors.green,
+            duration: Duration(seconds: 2),
+          )
+      );
   }
 }

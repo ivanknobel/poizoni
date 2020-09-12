@@ -13,7 +13,6 @@ class EditUserScreen extends StatefulWidget {
 }
 
 class _EditUserScreenState extends State<EditUserScreen> {
-
   bool _userEdited = false;
   bool _imageChanged = false;
 
@@ -29,92 +28,109 @@ class _EditUserScreenState extends State<EditUserScreen> {
           title: Text("Editar perfil"),
           centerTitle: true,
         ),
-        body: widget.model.isLoading ?
-            Container(child: Center(child: CircularProgressIndicator(),),) :
-        SingleChildScrollView(
-          child: Container(
-            padding: EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    GestureDetector(
-                      child: Container(
-                        child: Center(
-                          child: Text(
-                              "Editar imagem"), //TODO: deixar mais bonito isso
-                        ),
-                        width: 100,
-                        height: 100,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                              image: !_imageChanged ?
-                              NetworkImage(widget.model.editedUserData["img"])
-                                  : FileImage(_imageFile),
-                              fit: BoxFit.cover),
-                        ),
+        body: widget.model.isLoading
+            ? Container(
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              )
+            : SingleChildScrollView(
+                child: Container(
+                  padding: EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          GestureDetector(
+                            child: Container(
+                              child: Center(
+                                  child: Container(
+                                    child: Center(
+                                      child: Text(
+                                        "Editar Imagem",
+                                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                                      ),
+                                    ),
+                                    color: Colors.black12,
+                                    height: 25,
+                                  ),
+                              ),
+                              width: 100,
+                              height: 100,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                    image: !_imageChanged
+                                        ? NetworkImage(
+                                            widget.model.editedUserData["img"])
+                                        : FileImage(_imageFile),
+                                    fit: BoxFit.cover),
+                              ),
+                            ),
+                            onTap: () {
+                              _userEdited = true;
+                              _changeImage(context);
+                            },
+                          ),
+                          SizedBox(
+                            height: 100,
+                            width: 20,
+                          ),
+                          Container(
+                              width: 200,
+                              child: TextFormField(
+                                decoration: InputDecoration(labelText: "Nome"),
+                                initialValue:
+                                    widget.model.editedUserData["nome"],
+                                onChanged: (text) {
+                                  _userEdited = true;
+                                  setState(() {
+                                    widget.model.changeName(text);
+                                  });
+                                },
+                                style: TextStyle(fontSize: 20),
+                              )),
+                          SizedBox(
+                            height: 100,
+                            width: 20,
+                          ),
+                        ],
                       ),
-                      onTap: (){
-                        _userEdited = true;
-                        _changeImage(context);
-                      },
-                    ),
-                    SizedBox(
-                      height: 100,
-                      width: 20,
-                    ),
-                    Container(
-                        width: 200,
-                        child: TextFormField(
-                          decoration: InputDecoration(labelText: "Nome"),
-                          initialValue: widget.model.editedUserData["nome"],
-                          onChanged: (text) {
-                            _userEdited = true;
-                            setState(() {
-                              widget.model.changeName(text);
-                            });
-                          },
-                          style: TextStyle(fontSize: 20),
-                        )
-                    ),
-                    SizedBox(
-                      height: 100,
-                      width: 20,
-                    ),
-                  ],
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        "Telefones de emergência:",
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      ListView.separated(
+                        physics: NeverScrollableScrollPhysics(),
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemCount:
+                            widget.model.editedUserData["phones"].length + 1,
+                        itemBuilder: (context, index) {
+                          if (index ==
+                              widget.model.editedUserData["phones"].length)
+                            return _newPhoneCard(context, index);
+                          return _editPhoneCard(context, index);
+                        },
+                        separatorBuilder: (context, index) {
+                          return Divider();
+                        },
+                      ),
+                      SizedBox(
+                        height: 100,
+                      )
+                    ],
+                  ),
                 ),
-                SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  "Telefones de emergência:",
-                  style: TextStyle(fontSize: 18),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                ListView.separated(
-                  physics: NeverScrollableScrollPhysics(),
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  itemCount: widget.model.editedUserData["phones"].length + 1,
-                  itemBuilder: (context, index) {
-                    if (index == widget.model.editedUserData["phones"].length)
-                      return _newPhoneCard(context, index);
-                    return _editPhoneCard(context, index);
-                  },
-                  separatorBuilder: (context, index) {
-                    return Divider();
-                  },
-                ),
-                SizedBox(height: 100,)
-              ],
-            ),
-          ),
-        ),
+              ),
       ),
     );
   }
@@ -247,7 +263,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
                           "Câmera",
                           style: TextStyle(color: Colors.green, fontSize: 20.0),
                         ),
-                        onPressed: () async{
+                        onPressed: () async {
                           _userEdited = true;
                           await _getLocalImage("cam");
                           //Navigator.pop(context);
@@ -262,7 +278,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
                               style: TextStyle(
                                   color: Colors.green, fontSize: 20.0),
                             ),
-                            onPressed: () async{
+                            onPressed: () async {
                               _userEdited = true;
                               await _getLocalImage("gal");
                               //Navigator.pop(context);
@@ -272,23 +288,24 @@ class _EditUserScreenState extends State<EditUserScreen> {
                       child: FlatButton(
                         child: Text(
                           "Remover",
-                          style: !widget.model.hasImage() && _imageFile==null
+                          style: !widget.model.hasImage() && _imageFile == null
                               ? TextStyle(
                                   color: Colors.grey,
                                   fontSize: 20.0,
                                   fontWeight: FontWeight.normal)
                               : TextStyle(color: Colors.green, fontSize: 20.0),
                         ),
-                        onPressed: !widget.model.hasImage() && _imageFile==null
-                            ? () {}
-                            : () {
-                                _userEdited = true;
-                                setState(() {
-                                  widget.model.removeImage();
-                                  _imageFile = null;
-                                });
-                                Navigator.pop(context);
-                              },
+                        onPressed:
+                            !widget.model.hasImage() && _imageFile == null
+                                ? () {}
+                                : () {
+                                    _userEdited = true;
+                                    setState(() {
+                                      widget.model.removeImage();
+                                      _imageFile = null;
+                                    });
+                                    Navigator.pop(context);
+                                  },
                       ),
                     ),
                   ],
@@ -299,14 +316,14 @@ class _EditUserScreenState extends State<EditUserScreen> {
         });
   }
 
-  _getLocalImage(String source) async{
+  _getLocalImage(String source) async {
     File imageFile;
     if (source == "gal")
       imageFile = await ImagePicker.pickImage(source: ImageSource.gallery);
     else
       imageFile = await ImagePicker.pickImage(source: ImageSource.camera);
 
-    if (imageFile != null){
+    if (imageFile != null) {
       setState(() {
         _imageFile = imageFile;
         _imageChanged = true;
@@ -348,11 +365,14 @@ class _EditUserScreenState extends State<EditUserScreen> {
     }
   }
 
-  Widget _saveUserButton(){
+  Widget _saveUserButton() {
     return FloatingActionButton(
-      child: Icon(Icons.save, color: Colors.white,),
+      child: Icon(
+        Icons.save,
+        color: Colors.white,
+      ),
       backgroundColor: Theme.of(context).primaryColor,
-      onPressed: (){
+      onPressed: () {
         _requestSave();
       },
     );
@@ -382,7 +402,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
                     else
                       widget.model.saveEdit();
                     Navigator.pop(context);
-                    Navigator.pop(context);
+                    Navigator.pop(context, true); //retorna que deu certo
                   },
                 ),
               ],
@@ -390,9 +410,8 @@ class _EditUserScreenState extends State<EditUserScreen> {
           });
       return Future.value(false);
     } else {
+      Navigator.pop(context, false);
       return Future.value(true);
     }
   }
-
-
 }
