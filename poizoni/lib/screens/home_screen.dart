@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:poizoni/tabs/biblioteca_tab.dart';
 import 'package:poizoni/tabs/home_tab.dart';
-import 'package:poizoni/tabs/hospital_tab.dart';
+import 'package:poizoni/tabs/map_tab.dart';
 import 'package:poizoni/tabs/profile_tab.dart';
 import 'package:poizoni/widgets/custom_drawer.dart';
 
@@ -48,7 +48,7 @@ class HomeScreen extends StatelessWidget {
             centerTitle: true,
             textTheme: Theme.of(context).textTheme,
           ),
-          body: HospitalTab(),
+          body: MapTab(),
           drawer: CustomDrawer(_pageController),
         ),
         Scaffold(
