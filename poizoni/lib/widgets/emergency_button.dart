@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:poizoni/models/user_model.dart';
+import 'package:poizoni/screens/home_screen.dart';
+import 'package:poizoni/tabs/profile_tab.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -30,9 +32,7 @@ class _EmergencyButtonState extends State<EmergencyButton> {
 
   void _showPhones(context, model){
 
-    List<Map> phones = List.from(model.userData["phones"]);
-
-    showBottomSheet(context: context,
+    showModalBottomSheet(context: context,
         builder: (context){
           return BottomSheet(
             onClosing: (){},
@@ -41,39 +41,66 @@ class _EmergencyButtonState extends State<EmergencyButton> {
                 padding: EdgeInsets.all(10.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.all(10.0),
-                      child: FlatButton(
-                        child: Text(
-                          phones[0]["label"],
-                          style: TextStyle(color:Colors.green, fontSize: 20.0),
-                        ),
-                        onPressed: (){
-                          launch("tel:${phones[0]["number"]}");
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(10.0),
-                      child: FlatButton(
-                        child: Text(
-                          phones[1]["label"],
-                          style: TextStyle(color:Colors.green, fontSize: 20.0),
-                        ),
-                        onPressed: (){
-                          launch("tel:${phones[1]["number"]}");
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ),
-                  ],
+                  children: _bottomSheetItems(model),
                 ),
               );
             },
           );
         }
+    );
+  }
+
+  List<Widget> _bottomSheetItems(UserModel model){
+    List<Widget> ret = [];
+
+    if (!model.isLoggedIn())
+      return ret;
+
+    List<Map> phones = List.from(model.userData["phones"]);
+    int size = phones.length;
+
+    if (size == 0)
+      ret.add(Padding(
+        padding: EdgeInsets.all(10.0),
+        child: FlatButton(
+          child: Text(
+            "Adicionar telefones",
+            style: TextStyle(color:Colors.green, fontSize: 20.0),
+          ),
+          onPressed: (){
+            Navigator.of(context).push(
+                MaterialPageRoute(builder: (context)=>HomeScreen())
+            );
+
+            //Navigator.pop(context);
+          },
+        ),
+      ));
+    if (size <= 3){
+      for (int i=0; i<size; i++){
+
+      }
+    }
+
+    return [
+      _contactTile(phones[0]),
+      _contactTile(phones[1]),
+    ];
+  }
+
+  Widget _contactTile(Map phone){
+    return Padding(
+      padding: EdgeInsets.all(10.0),
+      child: FlatButton(
+        child: Text(
+          phone["label"],
+          style: TextStyle(color:Colors.green, fontSize: 20.0),
+        ),
+        onPressed: (){
+          launch("tel:${phone["number"]}");
+          Navigator.pop(context);
+        },
+      ),
     );
   }
 }
