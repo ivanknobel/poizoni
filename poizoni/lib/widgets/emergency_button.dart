@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:poizoni/models/user_model.dart';
+import 'package:poizoni/screens/edit_user_screen.dart';
 import 'package:poizoni/screens/home_screen.dart';
 import 'package:poizoni/tabs/profile_tab.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -37,11 +38,13 @@ class _EmergencyButtonState extends State<EmergencyButton> {
           return BottomSheet(
             onClosing: (){},
             builder: (context){
-              return Container(
-                padding: EdgeInsets.all(10.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: _bottomSheetItems(model),
+              return SingleChildScrollView(
+                child: Container(
+                  padding: EdgeInsets.all(10.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: _bottomSheetItems(model),
+                  ),
                 ),
               );
             },
@@ -68,24 +71,21 @@ class _EmergencyButtonState extends State<EmergencyButton> {
             style: TextStyle(color:Colors.green, fontSize: 20.0),
           ),
           onPressed: (){
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (context)=>HomeScreen())
-            );
-
-            //Navigator.pop(context);
+            _editProfile(context, model);
           },
         ),
       ));
-    if (size <= 3){
+    else{
       for (int i=0; i<size; i++){
-
+        ret.add(_contactTile(phones[i]));
       }
     }
 
-    return [
+    /*return [
       _contactTile(phones[0]),
       _contactTile(phones[1]),
-    ];
+    ];*/
+    return ret;
   }
 
   Widget _contactTile(Map phone){
@@ -102,5 +102,22 @@ class _EmergencyButtonState extends State<EmergencyButton> {
         },
       ),
     );
+  }
+
+  _editProfile(context, model) async{
+    model.startEdit();
+
+    final edited = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => EditUserScreen(model)),
+    );
+
+    if (edited)
+      Scaffold.of(context).showSnackBar(
+          SnackBar(content: Text("Usuário editado com sucesso!"),
+            backgroundColor: Colors.green,
+            duration: Duration(seconds: 2),
+          )
+      );
   }
 }

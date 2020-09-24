@@ -88,6 +88,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             "email": _emailController.text,
                             "phones": List(),
                             "img" : "",
+                            "showButton": true
                           };
 
                           model.signUp(userData: userData,

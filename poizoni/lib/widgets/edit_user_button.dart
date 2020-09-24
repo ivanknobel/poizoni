@@ -18,9 +18,6 @@ class EditUserButton extends StatelessWidget {
             ),
             backgroundColor: Theme.of(context).primaryColor,
             onPressed: () {
-              //model.startEdit();
-              //Navigator.of(context).push(MaterialPageRoute(
-              //    builder: (context) => EditUserScreen(model)));
               _editProfile(context, model);
             },
           );
