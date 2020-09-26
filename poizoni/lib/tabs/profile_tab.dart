@@ -4,6 +4,7 @@ import 'package:poizoni/models/user_model.dart';
 import 'package:poizoni/screens/edit_user_screen.dart';
 import 'package:poizoni/screens/nao_logado_screen.dart';
 import 'package:poizoni/tiles/phone_tile.dart';
+import 'package:poizoni/widgets/emergency_switch.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:transparent_image/transparent_image.dart';
 
@@ -62,10 +63,24 @@ class ProfileTab extends StatelessWidget {
                     SizedBox(
                       height: 20,
                     ),
+                    Row(
+                      children: [
+                        Text(
+                          "Mostrar botão de emergência?",
+                          style: TextStyle(
+                            fontSize: 18,
+                          ),
+                        ),
+                        EmergencySwitch(model),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
                     Text(
-                      "Telefones de emergência:",
+                      "Telefones:",
                       style: TextStyle(
-                          fontSize: 22,
+                          fontSize: 24,
                       ),
                     ),
                     SizedBox(
@@ -99,7 +114,7 @@ class ProfileTab extends StatelessWidget {
           "Novo",
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.normal),
         ),
-        color: Colors.green[400],
+        color: Colors.green[300],
         onPressed: () {
           _editProfile(context, model);
         },

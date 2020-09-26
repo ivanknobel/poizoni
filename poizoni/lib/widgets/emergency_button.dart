@@ -18,6 +18,9 @@ class _EmergencyButtonState extends State<EmergencyButton> {
       builder: (context, child, model){
         if (!model.isLoggedIn())
           return SizedBox(height: 0,);
+        else if (!model.userData["showButton"]){
+          return SizedBox(height: 0,);
+        }
         else
           return FloatingActionButton(
             child: Icon(
@@ -26,6 +29,7 @@ class _EmergencyButtonState extends State<EmergencyButton> {
             onPressed: (){
               _showPhones(context, model);
             },
+            backgroundColor: Colors.amber,
           );
       },
     );
@@ -71,21 +75,35 @@ class _EmergencyButtonState extends State<EmergencyButton> {
             style: TextStyle(color:Colors.green, fontSize: 20.0),
           ),
           onPressed: (){
-            _editProfile(context, model);
+            _perfil();
           },
         ),
       ));
     else{
       for (int i=0; i<size; i++){
-        ret.add(_contactTile(phones[i]));
+        if (i<3)
+          ret.add(_contactTile(phones[i]));
+        else{
+          ret.add(_moreTile());
+          break;
+        }
       }
     }
 
-    /*return [
-      _contactTile(phones[0]),
-      _contactTile(phones[1]),
-    ];*/
     return ret;
+  }
+
+  _moreTile(){
+    return Padding(
+      padding: EdgeInsets.all(10.0),
+      child: FlatButton(
+        child: Text(
+          "Ver todos",
+          style: TextStyle(color:Colors.green, fontSize: 20.0, fontWeight: FontWeight.bold),
+        ),
+        onPressed: _perfil,
+      ),
+    );
   }
 
   Widget _contactTile(Map phone){
@@ -104,20 +122,10 @@ class _EmergencyButtonState extends State<EmergencyButton> {
     );
   }
 
-  _editProfile(context, model) async{
-    model.startEdit();
-
-    final edited = await Navigator.push(
+  _perfil(){
+    Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => EditUserScreen(model)),
+      MaterialPageRoute(builder: (context) => HomeScreen(initPage: 3)),
     );
-
-    if (edited)
-      Scaffold.of(context).showSnackBar(
-          SnackBar(content: Text("Usuário editado com sucesso!"),
-            backgroundColor: Colors.green,
-            duration: Duration(seconds: 2),
-          )
-      );
   }
 }

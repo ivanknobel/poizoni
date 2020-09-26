@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:poizoni/datas/animal_data.dart';
 import 'package:poizoni/datas/expansion_panel_item.dart';
 import 'package:poizoni/widgets/animal_expansion_panel.dart';
+import 'package:poizoni/widgets/emergency_button.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class AnimalScreen extends StatefulWidget {
@@ -23,6 +24,7 @@ class _AnimalScreenState extends State<AnimalScreen> {
     List<ExpansionPanelItem> data = List.from(widget.animal.showData());
 
     return Scaffold(
+        floatingActionButton: EmergencyButton(),
         appBar: AppBar(
           title: Text(widget.animal.nome),
           centerTitle: true,

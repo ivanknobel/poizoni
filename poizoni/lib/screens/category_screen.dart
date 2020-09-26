@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:poizoni/datas/animal_data.dart';
 import 'package:poizoni/tiles/animal_tile.dart';
+import 'package:poizoni/widgets/emergency_button.dart';
 
 class CategoryScreen extends StatelessWidget {
 
@@ -12,6 +13,7 @@ class CategoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: EmergencyButton(),
       appBar: AppBar(
         title: Text(snapshot.data["title"]),
         centerTitle: true,

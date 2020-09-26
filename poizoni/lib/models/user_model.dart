@@ -200,5 +200,9 @@ class UserModel extends Model {
     notifyListeners();
   }
 
+  Future<Null> changeOption (bool val) async{
+    userData["showButton"] = val;
+    await _saveUserData(userData);
+  }
 
 }

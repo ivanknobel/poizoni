@@ -8,13 +8,28 @@ import 'package:poizoni/widgets/edit_user_button.dart';
 import 'package:poizoni/widgets/emergency_button.dart';
 
 class HomeScreen extends StatefulWidget {
+
+  final int initPage;
+
+  HomeScreen({this.initPage});
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
-  final _pageController = PageController();
+  PageController _pageController;
+
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.initPage != null)
+      _pageController = PageController(initialPage: widget.initPage);
+    else
+      _pageController = PageController();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             body: BibliotecaTab(),
             drawer: CustomDrawer(_pageController),
+            floatingActionButton: EmergencyButton(),
           ),
           Scaffold(
             appBar: AppBar(
@@ -58,6 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             body: HospitalTab(),
             drawer: CustomDrawer(_pageController),
+            floatingActionButton: EmergencyButton(),
           ),
           Scaffold(
             appBar: AppBar(
