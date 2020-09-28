@@ -40,6 +40,10 @@ class ProfileTab extends StatelessWidget {
                               image: NetworkImage(model.userData["img"]),
                                 fit: BoxFit.cover
                             ),
+                            border: Border.all(
+                              color: Colors.black,
+                              width: 2
+                            )
                           ),
                         ),
                         SizedBox(

@@ -76,13 +76,13 @@ class _HomeScreenState extends State<HomeScreen> {
             drawer: CustomDrawer(_pageController),
             floatingActionButton: EmergencyButton(),
           ),
-        ),
         Scaffold(
           appBar: AppBar(
             title: Text(
               "Perfil",
               style: TextStyle(color: Colors.white),
             ),
+          ),
             body: ProfileTab(),
             drawer: CustomDrawer(_pageController),
             floatingActionButton: EditUserButton(),

@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:poizoni/models/user_model.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class EditUserScreen extends StatefulWidget {
   @override
@@ -28,109 +29,114 @@ class _EditUserScreenState extends State<EditUserScreen> {
           title: Text("Editar perfil"),
           centerTitle: true,
         ),
-        body: widget.model.isLoading
-            ? Container(
-                child: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              )
-            : SingleChildScrollView(
-                child: Container(
-                  padding: EdgeInsets.all(20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          GestureDetector(
-                            child: Container(
-                              child: Center(
-                                  child: Container(
-                                    child: Center(
-                                      child: Text(
-                                        "Editar Imagem",
-                                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                                      ),
-                                    ),
-                                    color: Colors.black12,
-                                    height: 25,
+        body: ScopedModelDescendant<UserModel>(
+          builder: (context, child, model){
+            if (model.isLoading)
+                return Container(
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              else
+                return SingleChildScrollView(
+              child: Container(
+                padding: EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        GestureDetector(
+                          child: Container(
+                            child: Center(
+                              child: Container(
+                                child: Center(
+                                  child: Text(
+                                    "Editar Imagem",
+                                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                                   ),
-                              ),
-                              width: 100,
-                              height: 100,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                    image: !_imageChanged
-                                        ? NetworkImage(
-                                            widget.model.editedUserData["img"])
-                                        : FileImage(_imageFile),
-                                    fit: BoxFit.cover),
+                                ),
+                                color: Colors.black12,
+                                height: 25,
                               ),
                             ),
-                            onTap: () {
-                              _userEdited = true;
-                              _changeImage(context);
-                            },
-                          ),
-                          SizedBox(
+                            width: 100,
                             height: 100,
-                            width: 20,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                  image: !_imageChanged
+                                      ? NetworkImage(
+                                      model.editedUserData["img"])
+                                      : FileImage(_imageFile),
+                                  fit: BoxFit.cover),
+                            ),
                           ),
-                          Container(
-                              width: 200,
-                              child: TextFormField(
-                                decoration: InputDecoration(labelText: "Nome"),
-                                initialValue:
-                                    widget.model.editedUserData["nome"],
-                                onChanged: (text) {
-                                  _userEdited = true;
-                                  setState(() {
-                                    widget.model.changeName(text);
-                                  });
-                                },
-                                style: TextStyle(fontSize: 20),
-                              )),
-                          SizedBox(
-                            height: 100,
-                            width: 20,
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        "Telefones de emergência:",
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      ListView.separated(
-                        physics: NeverScrollableScrollPhysics(),
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        itemCount:
-                            widget.model.editedUserData["phones"].length + 1,
-                        itemBuilder: (context, index) {
-                          if (index ==
-                              widget.model.editedUserData["phones"].length)
-                            return _newPhoneCard(context, index);
-                          return _editPhoneCard(context, index);
-                        },
-                        separatorBuilder: (context, index) {
-                          return Divider();
-                        },
-                      ),
-                      SizedBox(
-                        height: 100,
-                      )
-                    ],
-                  ),
+                          onTap: () {
+                            _userEdited = true;
+                            _changeImage(context);
+                          },
+                        ),
+                        SizedBox(
+                          height: 100,
+                          width: 20,
+                        ),
+                        Container(
+                            width: 200,
+                            child: TextFormField(
+                              decoration: InputDecoration(labelText: "Nome"),
+                              initialValue:
+                              model.editedUserData["nome"],
+                              onChanged: (text) {
+                                _userEdited = true;
+                                setState(() {
+                                  widget.model.changeName(text);
+                                });
+                              },
+                              style: TextStyle(fontSize: 20),
+                            )),
+                        SizedBox(
+                          height: 100,
+                          width: 20,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      "Telefones de emergência:",
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    ListView.separated(
+                      physics: NeverScrollableScrollPhysics(),
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemCount:
+                      model.editedUserData["phones"].length + 1,
+                      itemBuilder: (context, index) {
+                        if (index ==
+                            model.editedUserData["phones"].length)
+                          return _newPhoneCard(context, index);
+                        return _editPhoneCard(context, index);
+                      },
+                      separatorBuilder: (context, index) {
+                        return Divider();
+                      },
+                    ),
+                    SizedBox(
+                      height: 100,
+                    )
+                  ],
                 ),
               ),
+            );
+          },
+        )
       ),
     );
   }
