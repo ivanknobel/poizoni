@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:poizoni/tabs/biblioteca_tab.dart';
 import 'package:poizoni/tabs/home_tab.dart';
-import 'package:poizoni/tabs/hospital_tab.dart';
+import 'package:poizoni/tabs/map_tab.dart';
 import 'package:poizoni/tabs/profile_tab.dart';
 import 'package:poizoni/widgets/custom_drawer.dart';
 import 'package:poizoni/widgets/edit_user_button.dart';
@@ -72,18 +72,16 @@ class _HomeScreenState extends State<HomeScreen> {
               centerTitle: true,
               textTheme: Theme.of(context).textTheme,
             ),
-            body: HospitalTab(),
+            body: MapTab(),
             drawer: CustomDrawer(_pageController),
             floatingActionButton: EmergencyButton(),
           ),
-          Scaffold(
-            appBar: AppBar(
-              title: Text(
-                "Perfil",
-                style: TextStyle(color: Colors.white),
-              ),
-              centerTitle: true,
-              textTheme: Theme.of(context).textTheme,
+        ),
+        Scaffold(
+          appBar: AppBar(
+            title: Text(
+              "Perfil",
+              style: TextStyle(color: Colors.white),
             ),
             body: ProfileTab(),
             drawer: CustomDrawer(_pageController),

@@ -25,24 +25,24 @@ class _HomeTabState extends State<HomeTab> {
                     alignment: Alignment.center,
                     child:
                     Padding(
-                      padding: EdgeInsets.fromLTRB(30.0, 50.0, 30.0, 20.0),
+                      padding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
                       child: GestureDetector(
                         child: SizedBox(
-                          height: 350.0,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Color.fromARGB(255, 204, 204, 204),
-                              border: Border.all(
-                                  color: Colors.black,
-                                  width: 2.0
-                              ),
-                            ),
-                            child: Center(
-                              child: image==null ? Text("Clique para selecionar uma imagem") :
-                              Image.file(File(image)),
+                        height: 350.0,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Color.fromARGB(255, 204, 204, 204),
+                            border: Border.all(
+                                color: Colors.black,
+                                width: 2.0
                             ),
                           ),
+                          child: Center(
+                            child: image==null ? Text("Clique para selecionar uma imagem") :
+                            Image.file(File(image)),
+                          ),
                         ),
+                      ),
                         onTap: (){
                           ImagePicker.pickImage(source: ImageSource.gallery).then((file){
                             if (file == null) return;
