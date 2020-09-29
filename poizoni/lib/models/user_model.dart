@@ -18,7 +18,11 @@ class UserModel extends Model {
 
   static const String default_img = "https://firebasestorage.googleapis.com/v0/b/poizoni.appspot.com/o/profile_pictures%2Fdefault.jpg?alt=media&token=e0685e42-7e23-4eb6-acf7-0b49e055f0a5";
 
-  // usuario atual
+  List<Map> _basePhones = [
+    {"label": "Ambulâncias - SAMU", "number": "192"},
+    {"label": "Corpo de Bombeiros", "number": "193"},
+    {"label": "Marinha", "number": "185"},
+  ];
 
   bool isLoading = false;
 
@@ -47,6 +51,7 @@ class UserModel extends Model {
       firebaseUser = user;
 
       userData["img"] = default_img;
+      phones = _basePhones;
       await _saveUserData(userData);
 
       onSuccess();

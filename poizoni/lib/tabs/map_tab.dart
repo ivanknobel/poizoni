@@ -6,6 +6,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:poizoni/datas/hospital_data.dart';
 import 'package:poizoni/screens/hospital_screen.dart';
+import 'package:poizoni/widgets/emergency_button.dart';
 
 const double CAMERA_ZOOM = 16;
 const double CAMERA_TILT = 80;
@@ -45,8 +46,10 @@ class _MyAppState extends State<TheMap> {
   MapType _currentMapType = MapType.normal;
   LatLng _lastMapPosition;
   LocationData currentLocation;
+
 // a reference to the destination location
   LocationData destinationLocation;
+
 // wrapper around the location API
   Location location;
 
@@ -80,7 +83,7 @@ class _MyAppState extends State<TheMap> {
     setState(() {
       // updated position
       var pinPosition =
-          LatLng(currentLocation.latitude, currentLocation.longitude);
+      LatLng(currentLocation.latitude, currentLocation.longitude);
 
       // the trick is to remove the marker (by id)
       // and add it again at the updated location
@@ -91,7 +94,7 @@ class _MyAppState extends State<TheMap> {
     // get a LatLng for the source location
     // from the LocationData currentLocation object
     var pinPosition =
-        LatLng(currentLocation.latitude, currentLocation.longitude);
+    LatLng(currentLocation.latitude, currentLocation.longitude);
   }
 
   void setInitialLocation() async {
@@ -128,8 +131,9 @@ class _MyAppState extends State<TheMap> {
     //    _lastMapPosition.latitude.toString()+","+_lastMapPosition.longitude.toString()+"&key="+key);
 
     http.Response response = await http.get(request);
-     return json.decode(response.body);
+    return json.decode(response.body);
   }
+
   Widget button(Function function, IconData icon, String herotag) {
     return FloatingActionButton(
       onPressed: function,
@@ -166,16 +170,16 @@ class _MyAppState extends State<TheMap> {
                 return Center(
                   child: CircularProgressIndicator(),
                 );
-              } else if(!snapshot.hasData){
+              } else if (!snapshot.hasData) {
                 return Center(
                   child: CircularProgressIndicator(),
                 );
               }
-              else{
+              else {
                 List hospitais = snapshot.data["candidates"];
 
-                if(hospitais.isNotEmpty){
-                  for(int i = 0; i < hospitais.length; i++){
+                if (hospitais.isNotEmpty) {
+                  for (int i = 0; i < hospitais.length; i++) {
                     String endereco = hospitais[i]["formatted_address"];
                     String nome = hospitais[i]["name"];
                     double lat = hospitais[i]["geometry"]["location"]["lat"];
@@ -186,7 +190,14 @@ class _MyAppState extends State<TheMap> {
 
                     LatLng _position = new LatLng(lat, long);
 
-                    var hospitaldata = new HospitalData(nome, endereco, lat, long, open_now, images, nota);
+                    var hospitaldata = new HospitalData(
+                        nome,
+                        endereco,
+                        lat,
+                        long,
+                        open_now,
+                        images,
+                        nota);
 
                     _markers.add(
                       Marker(
@@ -195,9 +206,10 @@ class _MyAppState extends State<TheMap> {
                         infoWindow: InfoWindow(
                           title: nome,
                           snippet: endereco,
-                          onTap: (){
+                          onTap: () {
                             Navigator.of(context).push(
-                                MaterialPageRoute(builder: (context)=>HospitalScreen(hospitaldata)));
+                                MaterialPageRoute(builder: (context) =>
+                                    HospitalScreen(hospitaldata)));
                           },
                         ),
                         icon: BitmapDescriptor.defaultMarker,
@@ -229,11 +241,12 @@ class _MyAppState extends State<TheMap> {
                               SizedBox(
                                 height: 60.0,
                               ),
-                              button(_onMapTypeButtonPressed, Icons.map, "btn1"),
+                              button(_onMapTypeButtonPressed, Icons.map,
+                                  "btn1"),
                               SizedBox(
                                 height: 16.0,
                               ),
-                              button(() {}, Icons.phone, "btn2"),
+                              EmergencyButton()
                             ],
                           ),
                         ),

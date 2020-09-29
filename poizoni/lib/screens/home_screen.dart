@@ -74,7 +74,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             body: MapTab(),
             drawer: CustomDrawer(_pageController),
-            floatingActionButton: EmergencyButton(),
           ),
         Scaffold(
           appBar: AppBar(

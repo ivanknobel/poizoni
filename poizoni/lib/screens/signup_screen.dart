@@ -15,6 +15,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,8 +87,8 @@ class _SignupScreenState extends State<SignupScreen> {
                           Map<String, dynamic> userData = {
                             "nome": _nomeController.text,
                             "email": _emailController.text,
-                            "phones": List(),
-                            "img" : "",
+                            //"phones": List(),
+                            //"img" : "",
                             "showButton": true
                           };
 

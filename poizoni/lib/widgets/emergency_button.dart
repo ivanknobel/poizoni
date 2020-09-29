@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:poizoni/models/user_model.dart';
-import 'package:poizoni/screens/edit_user_screen.dart';
 import 'package:poizoni/screens/home_screen.dart';
-import 'package:poizoni/tabs/profile_tab.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -12,6 +10,9 @@ class EmergencyButton extends StatefulWidget {
 }
 
 class _EmergencyButtonState extends State<EmergencyButton> {
+
+  static const max = 4;
+
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant<UserModel>(
@@ -81,7 +82,7 @@ class _EmergencyButtonState extends State<EmergencyButton> {
       ));
     else{
       for (int i=0; i<size; i++){
-        if (i<3)
+        if (i<max)
           ret.add(_contactTile(phones[i]));
         else{
           ret.add(_moreTile());
