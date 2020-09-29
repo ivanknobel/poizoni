@@ -165,6 +165,7 @@ class UserModel extends Model {
   void deletePhone(index){
     editedPhones.removeAt(index);
     editedUserData["phones"] = editedPhones;
+    notifyListeners();
   }
 
   bool hasImage(){

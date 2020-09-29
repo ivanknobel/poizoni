@@ -142,53 +142,57 @@ class _EditUserScreenState extends State<EditUserScreen> {
   }
 
   Widget _editPhoneCard(context, index) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(
-          width: 300,
-          child: TextFormField(
-            decoration: InputDecoration(labelText: "Etiqueta"),
-            onChanged: (text) {
-              _userEdited = true;
-              setState(() {
-                widget.model.changePhoneLabel(index, text);
-              });
-            },
-            initialValue: widget.model.editedUserData["phones"][index]["label"],
-            style: TextStyle(fontSize: 16),
-          ),
-        ),
-        Row(
+    return ScopedModelDescendant<UserModel>(
+      builder: (context, child, model){
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              width: 150,
+              width: 300,
               child: TextFormField(
-                decoration: InputDecoration(labelText: "Número"),
+                decoration: InputDecoration(labelText: "Etiqueta"),
                 onChanged: (text) {
                   _userEdited = true;
                   setState(() {
-                    widget.model.changePhoneNumber(index, text);
+                    model.changePhoneLabel(index, text);
                   });
                 },
-                initialValue: widget.model.editedUserData["phones"][index]
-                    ["number"],
-                keyboardType: TextInputType.phone,
+                initialValue: model.editedUserData["phones"][index]["label"],
                 style: TextStyle(fontSize: 16),
               ),
             ),
-            IconButton(
-              onPressed: () {
-                _userEdited = true;
-                setState(() {
-                  widget.model.deletePhone(index);
-                });
-              },
-              icon: Icon(Icons.delete),
+            Row(
+              children: [
+                SizedBox(
+                  width: 150,
+                  child: TextFormField(
+                    decoration: InputDecoration(labelText: "Número"),
+                    onChanged: (text) {
+                      _userEdited = true;
+                      setState(() {
+                        model.changePhoneNumber(index, text);
+                      });
+                    },
+                    initialValue: model.editedUserData["phones"][index]
+                    ["number"],
+                    keyboardType: TextInputType.phone,
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {
+                    _userEdited = true;
+                    setState(() {
+                      model.deletePhone(index);
+                    });
+                  },
+                  icon: Icon(Icons.delete),
+                )
+              ],
             )
           ],
-        )
-      ],
+        );
+      },
     );
   }
 
