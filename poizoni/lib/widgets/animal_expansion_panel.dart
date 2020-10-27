@@ -17,8 +17,8 @@ class _AnimalExpansionPanelState extends State<AnimalExpansionPanel> {
   @override
   Widget build(BuildContext context) {
 
-
     return ExpansionPanelList(
+      //dividerColor: Theme.of(context).primaryColor,
       expansionCallback: (int index, bool isExpanded) {
         setState(() {
           widget.data[index].isExpanded = !isExpanded;
@@ -28,24 +28,33 @@ class _AnimalExpansionPanelState extends State<AnimalExpansionPanel> {
         return ExpansionPanel(
           headerBuilder: (context, isExpanded){
             return ListTile(
-              title: Text(item.headerValue),
+              title: Text(
+                  item.headerValue,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                    fontSize: 16
+                ),
+              ),
             );
           },
           body: ListTile(
             title: Text(
               !item.showMore?
               item.expandedValue : item.details,
-              style: TextStyle(),
-              textAlign: TextAlign.justify,
+              style: TextStyle(
+
+              ),
+              textAlign: TextAlign.left,
             ),
             trailing: item.details=="" ?
             null :
             !item.showMore ?
             Icon(Icons.add) : Icon(Icons.remove),
             onTap: (){
-              setState(() {
-                item.showMore = !item.showMore;
-              });
+              if (item.details!="")
+                setState(() {
+                  item.showMore = !item.showMore;
+                });
             },
           ),
           isExpanded: item.isExpanded,
