@@ -125,7 +125,7 @@ class _HomeTabState extends State<HomeTab> {
                   alignment: Alignment.center,
                   padding: EdgeInsets.symmetric(horizontal: 80.0),
                   child: SizedBox(
-                    height: 20.0,
+                    height: 100.0,
                     child: Container(
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
