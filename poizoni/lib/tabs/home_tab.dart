@@ -127,33 +127,6 @@ class _HomeTabState extends State<HomeTab> {
                 SliverToBoxAdapter(
                     child: Container(
                   alignment: Alignment.center,
-                  padding: EdgeInsets.symmetric(horizontal: 80.0),
-                  child: SizedBox(
-                    height: 100.0,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Color.fromARGB(255, 204, 204, 204),
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 2.0,
-                        ),
-                      ),
-                      child: Center(
-                        child: IconButton(
-                          icon: Icon(Icons.photo_camera),
-                          iconSize: 40,
-                          onPressed: () {
-                            pickImage();
-                          },
-                        ),
-                      ),
-                    ),
-                  ),
-                )),
-                SliverToBoxAdapter(
-                    child: Container(
-                  alignment: Alignment.center,
                   padding: EdgeInsets.fromLTRB(40.0, 20.0, 40.0, 10.0),
                   child: RaisedButton(
                     child: Container(
