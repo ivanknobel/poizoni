@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:poizoni/screens/image_return_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tflite/tflite.dart';
@@ -63,6 +64,9 @@ class _HomeTabState extends State<HomeTab> {
     setState(() {
       _loading = false;
       _outputs = output;
+      Navigator.of(context).push(
+          MaterialPageRoute(builder: (context)=>ImageReturnScreen(_image, _outputs[0]["label"]))
+      );
     });
   }
 
@@ -118,8 +122,8 @@ class _HomeTabState extends State<HomeTab> {
                                   ),
                                 ))))
                     : SliverToBoxAdapter(
-                  child: Container(),
-                ),
+                        child: Container(),
+                      ),
                 SliverToBoxAdapter(
                     child: Container(
                   alignment: Alignment.center,
