@@ -6,6 +6,7 @@ import 'package:poizoni/screens/image_return_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tflite/tflite.dart';
+import 'package:image_picker/image_picker.dart';
 
 class HomeTab extends StatefulWidget {
   @override
@@ -43,14 +44,19 @@ class _HomeTabState extends State<HomeTab> {
     super.dispose();
   }
 
-  pickImage() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
-    if (image == null) return null;
+  pickImage(String source) async {
+    Navigator.pop(context);
     setState(() {
       _loading = true;
-      _image = image;
     });
-    classifyImage(image);
+    var img;
+    if (source == "gal")
+      img = await ImagePicker.pickImage(source: ImageSource.gallery);
+    else
+      img = await ImagePicker.pickImage(source: ImageSource.camera);
+    if (img == null) return null;
+    _image = img;
+    classifyImage(img);
   }
 
   classifyImage(File image) async {
@@ -65,86 +71,96 @@ class _HomeTabState extends State<HomeTab> {
       _loading = false;
       _outputs = output;
       Navigator.of(context).push(
-          MaterialPageRoute(builder: (context)=>ImageReturnScreen(_image, _outputs[0]["label"]))
+          MaterialPageRoute(builder: (context) =>
+              ImageReturnScreen(_image, _outputs[0]["label"]))
       );
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return _loading
-        ? Container(
-            alignment: Alignment.center,
-            child: CircularProgressIndicator(),
-          )
-        : Stack(children: <Widget>[
-            CustomScrollView(
-              slivers: <Widget>[
-                SliverToBoxAdapter(
-                    child: Container(
+    return _loading ? Container(child: Center(child: CircularProgressIndicator(),))
+        : SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
                   alignment: Alignment.center,
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                    child: GestureDetector(
-                      child: SizedBox(
-                        height: 350.0,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Color.fromARGB(255, 204, 204, 204),
-                            border: Border.all(color: Colors.black, width: 2.0),
-                          ),
-                          child: Center(
-                            child: _image == null
-                                ? Text("Clique para selecionar uma imagem")
-                                : Image.file(_image),
-                          ),
-                        ),
-                      ),
-                      onTap: () {
-                        pickImage();
-                      },
-                    ),
-                  ),
-                )),
-                _outputs != null
-                    ? SliverToBoxAdapter(
-                        child: Container(
-                            alignment: Alignment.center,
-                            padding: EdgeInsets.symmetric(horizontal: 80.0),
-                            child: SizedBox(
-                                height: 80.0,
-                                child: Text(
-                                  "${_outputs[0]["label"]}",
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 20.0,
-                                    background: Paint()..color = Colors.white,
-                                  ),
-                                ))))
-                    : SliverToBoxAdapter(
-                        child: Container(),
-                      ),
-                SliverToBoxAdapter(
-                    child: Container(
-                  alignment: Alignment.center,
-                  padding: EdgeInsets.fromLTRB(40.0, 20.0, 40.0, 10.0),
+                  padding: EdgeInsets.fromLTRB(40, 20, 40, 10),
                   child: RaisedButton(
                     child: Container(
                       padding: EdgeInsets.symmetric(
-                          horizontal: 30.0, vertical: 15.0),
+                          horizontal: 30, vertical: 15),
                       child: Text(
                         "Pesquisar animal",
-                        style: TextStyle(fontSize: 18.0),
+                        style: TextStyle(fontSize: 18),
                       ),
                     ),
                     color: Theme.of(context).primaryColor,
                     onPressed: () {
-                      pickImage();
+                      chooseImage(context);
                     },
                   ),
-                ))
-              ],
-            )
-          ]);
+                )
+            ],
+          ),
+      );
+  }
+
+  chooseImage(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return BottomSheet(
+            onClosing: () {},
+            builder: (context) {
+              return Container(
+                padding: EdgeInsets.all(10.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: FlatButton(
+                        child: Text(
+                          "Câmera",
+                          style: TextStyle(color: Colors.green, fontSize: 20.0),
+                        ),
+                        onPressed: () async {
+                          await pickImage("cam");
+                          //Navigator.pop(context);
+                        },
+                      ),
+                    ),
+                    Padding(
+                        padding: EdgeInsets.all(10.0),
+                        child: FlatButton(
+                            child: Text(
+                              "Galeria",
+                              style: TextStyle(
+                                  color: Colors.green, fontSize: 20.0),
+                            ),
+                            onPressed: () async {
+                              await pickImage("gal");
+                              //Navigator.pop(context);
+                            })),
+                    Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: FlatButton(
+                        child: Text(
+                          "Cancelar",
+                          style: TextStyle(color: Colors.green, fontSize: 20.0),
+                        ),
+                        onPressed: (){
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
+        });
+
   }
 }
