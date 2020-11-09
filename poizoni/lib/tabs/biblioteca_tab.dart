@@ -15,10 +15,12 @@ class BibliotecaTab extends StatelessWidget {
           else
             return ListView.builder(
                 padding: EdgeInsets.all(6),
-                itemCount: snapshot.data.documents.length+1,
+                itemCount: snapshot.data.documents.length + 1,
                 itemBuilder: (context, index) {
                   if (index >= snapshot.data.documents.length)
-                    return SizedBox(height: 100,);
+                    return SizedBox(
+                      height: 100,
+                    );
                   else
                     return CategoryTile(snapshot.data.documents[index]);
                 });
