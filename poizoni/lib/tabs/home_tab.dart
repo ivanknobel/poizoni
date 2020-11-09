@@ -83,24 +83,52 @@ class _HomeTabState extends State<HomeTab> {
         : SingleChildScrollView(
           child: Column(
             children: [
+              Padding(
+                padding: EdgeInsets.fromLTRB(5, 20, 5, 10),
+                child: Text(
+                  "Como usar a identificação de animais:",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                child: Text(
+                  "1. Aperte o botão e escolha entre tirar uma foto na hora ou selecionar da galeira do celular.",
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                child: Text(
+                  "2. Tire ou escolha a foto a ser analisada. Tente usar uma foto nítida e que seja possível ver o animal "
+                      "claramente, para melhor eficiência.",
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
               Container(
-                  alignment: Alignment.center,
-                  padding: EdgeInsets.fromLTRB(40, 20, 40, 10),
-                  child: RaisedButton(
-                    child: Container(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 30, vertical: 15),
-                      child: Text(
-                        "Pesquisar animal",
-                        style: TextStyle(fontSize: 18),
-                      ),
+                alignment: Alignment.center,
+                padding: EdgeInsets.fromLTRB(40, 20, 40, 10),
+                child: RaisedButton(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 30, vertical: 15),
+                    child: Text(
+                      "Pesquisar animal",
+                      style: TextStyle(fontSize: 18),
                     ),
-                    color: Theme.of(context).primaryColor,
-                    onPressed: () {
-                      chooseImage(context);
-                    },
                   ),
-                )
+                  color: Theme.of(context).primaryColor,
+                  onPressed: () {
+                    chooseImage(context);
+                  },
+                ),
+              ),
+              Text(
+                "Nosso programa tem uma taxa de 90% de acurácia nas cobras analisadas, então é possível que ocorram"
+                    "eventuais erros. Estamos trabalhando para melhorar a precisão.",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 14, fontStyle: FontStyle.italic),
+              ),
             ],
           ),
       );
