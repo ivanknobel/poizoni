@@ -54,7 +54,12 @@ class _HomeTabState extends State<HomeTab> {
       img = await ImagePicker.pickImage(source: ImageSource.gallery);
     else
       img = await ImagePicker.pickImage(source: ImageSource.camera);
-    if (img == null) return null;
+    if (img == null) {
+      setState(() {
+        _loading = false;
+      });
+      return null;
+    }
     _image = img;
     classifyImage(img);
   }
@@ -90,6 +95,10 @@ class _HomeTabState extends State<HomeTab> {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                 ),
               ),
+              Container(
+                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 5) ,
+                child: Image.asset("images/id.png"),
+              ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                 child: Text(
@@ -100,14 +109,21 @@ class _HomeTabState extends State<HomeTab> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                 child: Text(
-                  "2. Tire ou escolha a foto a ser analisada. Tente usar uma foto nítida e que seja possível ver o animal "
+                  "2. Tire ou escolha a foto a ser analisada. Tente usar uma foto nítida e na qual seja possível ver o animal "
                       "claramente, para melhor eficiência.",
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                child: Text(
+                  "3. Com o resultado, entre na página do animal em nossa biblioteca para mais detalhes e cuidados para se tomar perto dele.",
                   style: TextStyle(fontSize: 16),
                 ),
               ),
               Container(
                 alignment: Alignment.center,
-                padding: EdgeInsets.fromLTRB(40, 20, 40, 10),
+                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
                 child: RaisedButton(
                   child: Container(
                     padding: EdgeInsets.symmetric(
@@ -124,7 +140,7 @@ class _HomeTabState extends State<HomeTab> {
                 ),
               ),
               Text(
-                "Nosso programa tem uma taxa de 90% de acurácia nas cobras analisadas, então é possível que ocorram"
+                "Nosso programa tem uma taxa de 90% de acurácia nas cobras analisadas, então é possível que ocorram "
                     "eventuais erros. Estamos trabalhando para melhorar a precisão.",
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 14, fontStyle: FontStyle.italic),

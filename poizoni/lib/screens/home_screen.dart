@@ -81,6 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
               "Perfil",
               style: TextStyle(color: Colors.white),
             ),
+            centerTitle: true,
           ),
             body: ProfileTab(),
             drawer: CustomDrawer(_pageController),
