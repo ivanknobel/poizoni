@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:poizoni/screens/login_screen.dart';
 import 'package:poizoni/screens/signup_screen.dart';
 
+//Tela para se o usuário não estiver logado e redirecionar ele pra de login ou criar conta
 class NaoLogadoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

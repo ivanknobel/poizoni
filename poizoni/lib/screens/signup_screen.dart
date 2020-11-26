@@ -28,6 +28,7 @@ class _SignupScreenState extends State<SignupScreen> {
           builder: (context, child, model) {
             if (model.isLoading)
               return Center(child: CircularProgressIndicator());
+            //Form pra Criação da conta
             return Form(
               key: _formKey,
               child: ListView(

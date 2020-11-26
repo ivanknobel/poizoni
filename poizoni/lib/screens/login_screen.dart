@@ -23,6 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
         title: Text("Entrar"),
         centerTitle: true,
         actions: <Widget>[
+          //Opção de criar conta no canto superior
           FlatButton(
             child: Text(
               "CRIAR CONTA",
@@ -41,6 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
           return Center(
             child: CircularProgressIndicator(),
           );
+        //Form pra logar
         return Form(
           key: _formKey,
           child: ListView(

@@ -5,6 +5,7 @@ import 'package:poizoni/tiles/category_tile.dart';
 class BibliotecaTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //Pega as categorias de animais e cria uma lista de Tiles para elas
     return FutureBuilder<QuerySnapshot>(
         future: Firestore.instance.collection("animais").getDocuments(),
         builder: (context, snapshot) {

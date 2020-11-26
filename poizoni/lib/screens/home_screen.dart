@@ -7,10 +7,11 @@ import 'package:poizoni/widgets/custom_drawer.dart';
 import 'package:poizoni/widgets/edit_user_button.dart';
 import 'package:poizoni/widgets/emergency_button.dart';
 
+//Essa é a página principal, que consiste nas 4 abas e muda entre elas
 class HomeScreen extends StatefulWidget {
 
+  //É possível passar um índice para abrir em uma das abas
   final int initPage;
-
   HomeScreen({this.initPage});
 
   @override
@@ -20,7 +21,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   PageController _pageController;
-
 
   @override
   void initState() {
@@ -33,6 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    //A PageView controla a página acessada pelo drawer que todas as scaffolds tem
     return PageView(
         controller: _pageController,
         physics: NeverScrollableScrollPhysics(),

@@ -8,8 +8,8 @@ class EditUserScreen extends StatefulWidget {
   @override
   _EditUserScreenState createState() => _EditUserScreenState();
 
+  //Recebe o usuário pra editar
   final UserModel model;
-
   EditUserScreen(this.model);
 }
 
@@ -141,6 +141,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
     );
   }
 
+  //Card para editar o telefone, onde é possível mudar nome, número ou apagar
   Widget _editPhoneCard(context, index) {
     return ScopedModelDescendant<UserModel>(
       builder: (context, child, model){
@@ -196,6 +197,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
     );
   }
 
+  //Parecido com o de editar telefone, mas para criar um novo
   Widget _newPhoneCard(context, index) {
     var _formKey = GlobalKey<FormState>();
     var _labelController = TextEditingController();
@@ -254,6 +256,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
     );
   }
 
+  //Mostra a barra para escolher a foto e muda ela
   _changeImage(context) {
     showModalBottomSheet(
         context: context,
@@ -326,6 +329,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
         });
   }
 
+  //Pega a imagem
   _getLocalImage(String source) async {
     File imageFile;
     if (source == "gal")
@@ -343,6 +347,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
     }
   }
 
+  //Confirmação quando for sair para o usuário não perder alterações
   Future<bool> _requestPop() {
     if (_userEdited) {
       showDialog(
@@ -375,6 +380,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
     }
   }
 
+  //Botão de salvar
   Widget _saveUserButton() {
     return FloatingActionButton(
       child: Icon(
@@ -388,6 +394,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
     );
   }
 
+  //Confirmação se o usuário quer mesmo salvar e função para salvar
   Future<bool> _requestSave() {
     if (_userEdited) {
       showDialog(

@@ -16,6 +16,7 @@ class AnimalData{
 
   String category;
 
+  //Pega o animal a partir do documento pego do firebase
   AnimalData.fromDocument(DocumentSnapshot snapshot)
   {
     id = snapshot.documentID;
@@ -30,6 +31,7 @@ class AnimalData{
     sintomas = snapshot.data["especies"];
   }
 
+  //Monta a lista para mostrar na página do animal
   List<ExpansionPanelItem> showData(){
     return [
       ExpansionPanelItem(headerValue: "Descrição", expandedValue: this.desc),

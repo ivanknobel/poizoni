@@ -3,8 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:poizoni/datas/animal_data.dart';
-import 'package:poizoni/tabs/map_tab.dart';
-
 import 'animal_screen.dart';
 import 'home_screen.dart';
 
@@ -16,19 +14,20 @@ class ImageReturnScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //Verifica se um animal foi identificado ou não
     bool _achou = true;
-    String _id = label.split(" ")[1];
-    if (_id == "Outros"){
+    String _id = label.split(" ")[1]; //Pega só o texto do resultado
+    if (_id == "Outros"){ //Se o resultado for "Outros", nenhum animal foi identificado
       _achou = false;
     }
 
     return Scaffold(
       appBar: AppBar(
-        title: _achou ? Text("Animal identificado") : Text("Falha ao identificar animal"),
+        title: _achou ? Text("Animal identificado") : Text("Falha ao identificar animal"), //Muda o título dependendo de achar ou não um animal
         centerTitle: true,
       ),
       body: SingleChildScrollView(
-        child: !_achou ?
+        child: !_achou ? //Se não tiver achado, mostra isso:
         Padding(
           padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
           child: Column(
@@ -39,6 +38,7 @@ class ImageReturnScreen extends StatelessWidget {
             ],
           ),
         ) :
+          //Se tiver achado, tem que pegar os dados do animal para poder enviar pra página dele:
         StreamBuilder<DocumentSnapshot>(
             stream: Firestore.instance.collection("animais").document("serpentes").collection("items").document(_id).snapshots(),
             builder: (context, snapshot) {
@@ -64,6 +64,7 @@ class ImageReturnScreen extends StatelessWidget {
     );
   }
 
+  //Mostra a imagem analisada
   Widget info(){
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -87,6 +88,7 @@ class ImageReturnScreen extends StatelessWidget {
     );
   }
 
+  //Aviso que nenhum animal foi achado
   Widget outrosResults(){
       return Column(
         children: [
@@ -100,6 +102,7 @@ class ImageReturnScreen extends StatelessWidget {
       );
   }
 
+  //Resultado do animal encontrado
   Widget reults(AnimalData animal){
     return Column(
       children: [
@@ -117,6 +120,7 @@ class ImageReturnScreen extends StatelessWidget {
     );
   }
 
+  //Botões de voltar ou ir pra biblioteca, já que não achou
   Widget outrosOptions(context){
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -162,6 +166,7 @@ class ImageReturnScreen extends StatelessWidget {
     );
   }
 
+  //Botões de voltar ou ir pra página do animal, já que achou
   Widget options(context, AnimalData animal){
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,

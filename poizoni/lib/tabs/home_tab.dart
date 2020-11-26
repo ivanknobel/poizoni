@@ -3,10 +3,8 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:poizoni/screens/image_return_screen.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tflite/tflite.dart';
-import 'package:image_picker/image_picker.dart';
 
 class HomeTab extends StatefulWidget {
   @override
@@ -44,6 +42,7 @@ class _HomeTabState extends State<HomeTab> {
     super.dispose();
   }
 
+  //Função que pega a imagem da fonte selecionada
   pickImage(String source) async {
     Navigator.pop(context);
     setState(() {
@@ -61,10 +60,12 @@ class _HomeTabState extends State<HomeTab> {
       return null;
     }
     _image = img;
+    //coloca a imagem para ser classificada
     classifyImage(img);
   }
 
   classifyImage(File image) async {
+    //pega a imagem e roda com o modelo
     var output = await Tflite.runModelOnImage(
       path: image.path,
       numResults: 2,
@@ -74,7 +75,8 @@ class _HomeTabState extends State<HomeTab> {
     );
     setState(() {
       _loading = false;
-      _outputs = output;
+      _outputs = output; //pega o output
+      //leva o output pra página de retorno
       Navigator.of(context).push(
           MaterialPageRoute(builder: (context) =>
               ImageReturnScreen(_image, _outputs[0]["label"]))
@@ -87,6 +89,7 @@ class _HomeTabState extends State<HomeTab> {
     return _loading ? Container(child: Center(child: CircularProgressIndicator(),))
         : SingleChildScrollView(
           child: Column(
+            //Textos e botão:
             children: [
               Padding(
                 padding: EdgeInsets.fromLTRB(5, 20, 5, 10),
@@ -150,6 +153,7 @@ class _HomeTabState extends State<HomeTab> {
       );
   }
 
+  //Aba que sobe para o usuário escolher de onde quer pegar a imagem
   chooseImage(context) {
     showModalBottomSheet(
         context: context,

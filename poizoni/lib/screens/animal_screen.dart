@@ -5,11 +5,11 @@ import 'package:poizoni/datas/animal_data.dart';
 import 'package:poizoni/datas/expansion_panel_item.dart';
 import 'package:poizoni/widgets/animal_expansion_panel.dart';
 import 'package:poizoni/widgets/emergency_button.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 class AnimalScreen extends StatefulWidget {
-  final AnimalData animal;
 
+  //Recebe o animal a ser mostrado
+  final AnimalData animal;
   AnimalScreen(this.animal);
 
   @override
@@ -32,6 +32,7 @@ class _AnimalScreenState extends State<AnimalScreen> {
         body: SingleChildScrollView(
             child: Column(
           children: <Widget>[
+            //Coloca as imagem em um Carousel
             AspectRatio(
               aspectRatio: 1.3,
               child: Carousel(
@@ -45,6 +46,7 @@ class _AnimalScreenState extends State<AnimalScreen> {
                 autoplay: false,
               ),
             ),
+            //Cria um Painel com os dados pegos do animal
             Container(
               child: AnimalExpansionPanel(data),
             ),

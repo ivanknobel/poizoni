@@ -16,8 +16,10 @@ class UserModel extends Model {
   Map<String, dynamic> editedUserData = Map();
   List<dynamic> editedPhones = List();
 
+  //link da imagem de perfil padrão
   static const String default_img = "https://firebasestorage.googleapis.com/v0/b/poizoni.appspot.com/o/profile_pictures%2Fdefault.jpg?alt=media&token=e0685e42-7e23-4eb6-acf7-0b49e055f0a5";
 
+  //Lista dos telefones que vem na conta do usuário
   List<Map> _basePhones = [
     {"label": "Ambulâncias - SAMU", "number": "192"},
     {"label": "Corpo de Bombeiros", "number": "193"},
@@ -35,6 +37,8 @@ class UserModel extends Model {
 
     _loadCurrentUser();
   }
+
+  //Funções padrões para se cadastrar, logar e sair pelo firebase:
 
   void signUp(
       {@required Map<String, dynamic> userData,
@@ -132,6 +136,8 @@ class UserModel extends Model {
     notifyListeners();
   }
 
+  //A partir daqui, funções relacionadas a editar o usuário:
+
   void startEdit(){
     editedUserData = Map.from(userData);
     editedPhones = List.from(phones);
@@ -182,9 +188,6 @@ class UserModel extends Model {
   }
 
   Future<Null> changeImage (File img) async{
-
-    //isLoading = true;
-    //notifyListeners();
 
     var fileExtension = path.extension(img.path);
 

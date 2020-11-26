@@ -6,8 +6,8 @@ import 'package:poizoni/widgets/emergency_button.dart';
 
 class CategoryScreen extends StatelessWidget {
 
+  //Recebe um snapshot que é a categoria a ser mostrada na página
   final DocumentSnapshot snapshot;
-
   CategoryScreen(this.snapshot);
 
   @override
@@ -18,6 +18,7 @@ class CategoryScreen extends StatelessWidget {
         title: Text(snapshot.data["title"]),
         centerTitle: true,
       ),
+      //Aqui ele vai pegar os dados dos animais da categoria e criar a lista, com um AnimalTile pra cada animal
       body: FutureBuilder<QuerySnapshot>(
           future: Firestore.instance.collection("animais").document(snapshot.documentID).collection("items").getDocuments(),
           builder: (context, snapshot){
