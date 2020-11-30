@@ -4,28 +4,28 @@ import 'package:poizoni/tiles/drawer_tile.dart';
 import 'package:poizoni/screens/login_screen.dart';
 import 'package:scoped_model/scoped_model.dart';
 
+//Drawer na lateral da tela
 class CustomDrawer extends StatelessWidget {
 
-  final PageController pageController;
-
+  final PageController pageController; //Controlador de páginas para a main
   CustomDrawer (this.pageController);
 
   @override
   Widget build(BuildContext context) {
 
-
-      Widget _buildDrawerBack() => Container(
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-                colors: [
-                  Color.fromARGB(255, 203, 241, 200),
-                  Colors.white
-                ],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter
-            )
-        ),
-      );
+    //Degradê no fundo
+    Widget _buildDrawerBack() => Container(
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+              colors: [
+                Color.fromARGB(255, 203, 241, 200),
+                Colors.white
+              ],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter
+          )
+      ),
+    );
 
     return Drawer(
       child: Stack(
@@ -90,6 +90,7 @@ class CustomDrawer extends StatelessWidget {
                 ),
               ),
               Divider(),
+              //Tiles com cada página:
               DrawerTile(Icons.photo_camera, "Identificar Animal", pageController, 0),
               DrawerTile(Icons.book, "Biblioteca", pageController, 1),
               DrawerTile(Icons.local_hospital, "Encontrar Hospitais", pageController, 2),

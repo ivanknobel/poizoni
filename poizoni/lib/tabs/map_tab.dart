@@ -44,65 +44,42 @@ class _MyAppState extends State<TheMap> {
   Completer<GoogleMapController> _controller = Completer();
   final Set<Marker> _markers = {};
   MapType _currentMapType = MapType.normal;
-  LatLng _lastMapPosition;
   LocationData currentLocation;
-
-// a reference to the destination location
   LocationData destinationLocation;
-
-// wrapper around the location API
   Location location;
 
   @override
   void initState() {
     super.initState();
 
-    location = new Location();
+    location = new Location(); //instancia a localização
 
+    //seleciona o que fazer quando a localização mudar
     location.onLocationChanged.listen((LocationData cLoc) {
       currentLocation = cLoc;
       updatePinOnMap();
     });
 
-    setInitialLocation();
+    setInitialLocation(); //seleciona a localização como a atual
   }
 
   void updatePinOnMap() async {
-    // create a new CameraPosition instance
-    // every time the location changes, so the came
+    // semrpe que a localização mudar, a câmera muda também
     CameraPosition cPosition = CameraPosition(
       zoom: CAMERA_ZOOM,
       tilt: CAMERA_TILT,
       bearing: CAMERA_BEARING,
       target: LatLng(currentLocation.latitude, currentLocation.longitude),
     );
+    //Mexe a câmera para a nova posição:
     final GoogleMapController controller = await _controller.future;
     controller.animateCamera(CameraUpdate.newCameraPosition(cPosition));
-    // do this inside the setState() so Flutter gets notified
-    // that a widget update is due
-    setState(() {
-      // updated position
-      var pinPosition =
-      LatLng(currentLocation.latitude, currentLocation.longitude);
-
-      // the trick is to remove the marker (by id)
-      // and add it again at the updated location
-    });
   }
 
-  void showPinsOnMap() {
-    // get a LatLng for the source location
-    // from the LocationData currentLocation object
-    var pinPosition =
-    LatLng(currentLocation.latitude, currentLocation.longitude);
-  }
-
+  //Seleciona a localização atual do usuário:
   void setInitialLocation() async {
-    // set the initial location by pulling the user's
-    // current location from the location's getLocation()
     currentLocation = await location.getLocation();
 
-    // hard-coded destination for this example
     destinationLocation = LocationData.fromMap({
       "latitude": DEST_LOCATION.latitude,
       "longitude": DEST_LOCATION.longitude
@@ -111,9 +88,9 @@ class _MyAppState extends State<TheMap> {
 
   _onMapCreated(GoogleMapController controller) {
     _controller.complete(controller);
-    showPinsOnMap();
   }
 
+  //Muda o mapa de normal para satélite
   _onMapTypeButtonPressed() {
     setState(() {
       _currentMapType = _currentMapType == MapType.normal
@@ -122,18 +99,13 @@ class _MyAppState extends State<TheMap> {
     });
   }
 
-  _onCameraMove(CameraPosition position) {
-    _lastMapPosition = position.target;
-  }
-
+  //Pega os dados do google maps
   Future<Map> getData() async {
-    //http.Response response = await http.get(request+"&input=hospitais&inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry&locationbias=circle:5000@"+
-    //    _lastMapPosition.latitude.toString()+","+_lastMapPosition.longitude.toString()+"&key="+key);
-
     http.Response response = await http.get(request);
     return json.decode(response.body);
   }
 
+  //Botão para mudar o mapa entre normal e satélite
   Widget button(Function function, IconData icon, String herotag) {
     return FloatingActionButton(
       onPressed: function,
@@ -149,6 +121,7 @@ class _MyAppState extends State<TheMap> {
 
   @override
   Widget build(BuildContext context) {
+    //Cria a câmera
     CameraPosition initialCameraPosition = CameraPosition(
         zoom: CAMERA_ZOOM, tilt: CAMERA_TILT, target: SOURCE_LOCATION);
     if (currentLocation != null) {

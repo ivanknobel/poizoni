@@ -3,7 +3,7 @@ import "package:flutter/material.dart";
 import 'package:poizoni/screens/category_screen.dart';
 import 'package:transparent_image/transparent_image.dart';
 
-//Tile pra cada animal
+//Tile pra cada categoria de animais
 class CategoryTile extends StatelessWidget {
 
   final DocumentSnapshot snapshot;

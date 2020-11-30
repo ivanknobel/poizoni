@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart ';
 import 'package:url_launcher/url_launcher.dart';
 
+//Tile de cada telefone no perfil
 class PhoneTile extends StatelessWidget {
 
   final Map phone;
@@ -40,7 +41,7 @@ class PhoneTile extends StatelessWidget {
                 icon: Icon(Icons.phone),
                 iconSize: 28,
                 onPressed: () {
-                  launch("tel:${phone["number"]}");
+                  launch("tel:${phone["number"]}"); //Abre o telefone com o número pra ligar
                 },
               ),
           ],

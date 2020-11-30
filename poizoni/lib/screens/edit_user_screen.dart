@@ -279,7 +279,6 @@ class _EditUserScreenState extends State<EditUserScreen> {
                         onPressed: () async {
                           _userEdited = true;
                           await _getLocalImage("cam");
-                          //Navigator.pop(context);
                         },
                       ),
                     ),
@@ -294,7 +293,6 @@ class _EditUserScreenState extends State<EditUserScreen> {
                             onPressed: () async {
                               _userEdited = true;
                               await _getLocalImage("gal");
-                              //Navigator.pop(context);
                             })),
                     Padding(
                       padding: EdgeInsets.all(10.0),
@@ -341,7 +339,6 @@ class _EditUserScreenState extends State<EditUserScreen> {
       setState(() {
         _imageFile = imageFile;
         _imageChanged = true;
-        //widget.model.changeImage(imageFile);
         Navigator.pop(context);
       });
     }

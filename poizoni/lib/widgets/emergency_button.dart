@@ -4,6 +4,7 @@ import 'package:poizoni/screens/home_screen.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+//Botão de emergência
 class EmergencyButton extends StatefulWidget {
   @override
   _EmergencyButtonState createState() => _EmergencyButtonState();
@@ -11,7 +12,7 @@ class EmergencyButton extends StatefulWidget {
 
 class _EmergencyButtonState extends State<EmergencyButton> {
 
-  static const max = 4;
+  static const max = 4; //Máximo de contatos que vão aparecer
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class _EmergencyButtonState extends State<EmergencyButton> {
         else if (!model.userData["showButton"]){
           return SizedBox(height: 0,);
         }
-        else
+        else //Só vai mostrar se o usuário estiver logado e quiser
           return FloatingActionButton(
             child: Icon(
               Icons.warning,

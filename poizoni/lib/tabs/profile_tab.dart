@@ -6,7 +6,6 @@ import 'package:poizoni/screens/nao_logado_screen.dart';
 import 'package:poizoni/tiles/phone_tile.dart';
 import 'package:poizoni/widgets/emergency_switch.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 class ProfileTab extends StatelessWidget {
   @override
@@ -111,6 +110,8 @@ class ProfileTab extends StatelessWidget {
       );
   }
 
+
+  //Botão pra adicionar telefone, que vai pra página de editar o usuário
   Widget _newButton(context, model){
     return Container(
       child: MaterialButton(
@@ -127,6 +128,8 @@ class ProfileTab extends StatelessWidget {
     );
   }
 
+  //Função pra ir pra página de editar
+  //É preciso avisar que está começando a edição e pedir um bool de retorno para a próxima página, para saber se editou ou não
   _editProfile(context, model) async{
     model.startEdit();
 

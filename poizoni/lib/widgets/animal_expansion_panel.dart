@@ -1,24 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:poizoni/datas/animal_data.dart';
 import 'package:poizoni/datas/expansion_panel_item.dart';
 
 class AnimalExpansionPanel extends StatefulWidget {
 
   final List<ExpansionPanelItem> data;
-
   AnimalExpansionPanel(this.data);
 
   @override
   _AnimalExpansionPanelState createState() => _AnimalExpansionPanelState();
 }
 
+//Painel com as informações do animal
 class _AnimalExpansionPanelState extends State<AnimalExpansionPanel> {
-
   @override
   Widget build(BuildContext context) {
 
     return ExpansionPanelList(
-      //dividerColor: Theme.of(context).primaryColor,
       expansionCallback: (int index, bool isExpanded) {
         setState(() {
           widget.data[index].isExpanded = !isExpanded;

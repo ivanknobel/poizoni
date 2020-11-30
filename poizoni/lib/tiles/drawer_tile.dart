@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+//Tile do drawer
 class DrawerTile extends StatelessWidget {
 
   final IconData icon;
@@ -16,7 +17,7 @@ class DrawerTile extends StatelessWidget {
       child: InkWell(
         onTap: (){
           Navigator.of(context).pop();
-          controller.jumpToPage(page);
+          controller.jumpToPage(page); //Quando clica abre a tab do tile
         },
         child: Container(
           height: 60.0,

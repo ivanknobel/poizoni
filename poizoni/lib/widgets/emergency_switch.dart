@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:poizoni/models/user_model.dart';
 
+//Switch que o usuário usa pra escolher ou não ver o botão de emergência
 class EmergencySwitch extends StatefulWidget {
 
   final UserModel model;
@@ -16,7 +17,7 @@ class _EmergencySwitchState extends State<EmergencySwitch> {
   @override
   void initState() {
     super.initState();
-    val = widget.model.userData["showButton"];
+    val = widget.model.userData["showButton"]; //Pega o dado do usuário para começar
   }
 
   @override
@@ -29,6 +30,7 @@ class _EmergencySwitchState extends State<EmergencySwitch> {
     );
   }
 
+  //Muda a opção
   _onChange(newVal) {
     setState(() {
       val = newVal;
